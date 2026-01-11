@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-32x32.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"gutaozi.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Notes for information theory and coding">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EE411 Information Theory and Coding">
+<meta property="og:url" content="https://gutaozi.github.io/2026/01/11/EE411_Notes/index.html">
+<meta property="og:site_name" content="GuTao&#39;s Nest">
+<meta property="og:description" content="Notes for information theory and coding">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-01-11T08:44:57.961Z">
+<meta property="article:modified_time" content="2026-01-11T08:44:58.009Z">
+<meta property="article:author" content="Gu Tao">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://gutaozi.github.io/2026/01/11/EE411_Notes/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://gutaozi.github.io/2026/01/11/EE411_Notes/","path":"2026/01/11/EE411_Notes/","title":"EE411 Information Theory and Coding"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>EE411 Information Theory and Coding | GuTao's Nest</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">GuTao's Nest</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Outline"><span class="nav-number">1.</span> <span class="nav-text">Outline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chapter-1-Entropy"><span class="nav-number">2.</span> <span class="nav-text">Chapter 1: Entropy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chapter-2-Inequalities"><span class="nav-number">3.</span> <span class="nav-text">Chapter 2: Inequalities</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chapter-3-Asymptotic-Equipartition-Property"><span class="nav-number">4.</span> <span class="nav-text">Chapter 3: Asymptotic Equipartition Property</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chapter-5-Source-Coding"><span class="nav-number">5.</span> <span class="nav-text">Chapter 5: Source Coding</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Gu Tao"
+      src="https://avatars.githubusercontent.com/u/109007949?v=4">
+  <p class="site-author-name" itemprop="name">Gu Tao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/gutaozi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;gutaozi" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gutao.official@gmail.com" title="E-Mail → mailto:gutao.official@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gutaozi.github.io/2026/01/11/EE411_Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/109007949?v=4">
+      <meta itemprop="name" content="Gu Tao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuTao's Nest">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="EE411 Information Theory and Coding | GuTao's Nest">
+      <meta itemprop="description" content="Notes for information theory and coding">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          EE411 Information Theory and Coding
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2026-01-11 16:44:57 / Modified: 16:44:58" itemprop="dateCreated datePublished" datetime="2026-01-11T16:44:57+08:00">2026-01-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/CS/" itemprop="url" rel="index"><span itemprop="name">CS</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">Notes for information theory and coding</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Outline"><a href="#Outline" class="headerlink" title="Outline"></a>Outline</h2><ul>
+<li>Chapter 0: Introduction</li>
+<li>Chapter 1: Entropy</li>
+<li>Chapter 2: Inequalities</li>
+</ul>
+<h2 id="Chapter-1-Entropy"><a href="#Chapter-1-Entropy" class="headerlink" title="Chapter 1: Entropy"></a>Chapter 1: Entropy</h2><ul>
+<li><strong>Monotonous</strong>: less probable $\rightarrow$ more information</li>
+<li><strong>Additive</strong>: Total info &#x3D; $\sum$ info independent events</li>
+</ul>
+<p>For a discrete random variable $X$:</p>
+<ul>
+<li>Realizations: $\mathcal X&#x3D;{x_1,\dots,x_q}$</li>
+<li>Probabilities: ${p_1,\dots,p_q}$</li>
+<li>Self-info of $X&#x3D;x_i$: $-\log p_i$</li>
+<li>Avg. information: $I(X)&#x3D;-\sum\limits_{i&#x3D;1}^q p_i \log p_i$</li>
+</ul>
+<p><strong>Entropy</strong>:</p>
+<p>A measure of the amount of info required to describe a r.v., average bits to describe the random variable.<br>$$<br>H(X) &#x3D; -\sum\limits_{x\in\mathcal X}p(x)\log p(x)&#x3D;-E[\log p(X)]<br>$$</p>
+<blockquote>
+<p>Lemma 1. $H(X)\ge 0$</p>
+<p>Lemma 2. $H_b(X)&#x3D;(\log_ba)H_a(X)$</p>
+<p>Denote $H(p) &#x3D; -p\log p - (1-p)\log(1-p)$</p>
+</blockquote>
+<p><strong>Joint Entropy</strong>:<br>$$<br>H(X,Y)&#x3D;-\sum\limits_{x\in\mathcal X}\sum\limits_{y\in\mathcal Y}p(x,y)\log p(x,y) &#x3D; -E[\log p(X,Y)]<br>$$</p>
+<blockquote>
+<p>If $X$ and $Y$ are independent, then $H(X,Y) &#x3D; H(X) + H(Y)$</p>
+</blockquote>
+<p><strong>Conditional Entropy</strong>:<br>$$<br>H(Y\mid X)&#x3D;-\sum\limits_{x\in\mathcal X}\sum\limits_{y\in\mathcal Y}p(x,y)\log p(y\mid x) &#x3D; -E[\log p(Y\mid X)]<br>$$<br><strong>Chain Rule of Entropy</strong>:</p>
+<p>Proof by induction.<br>$$<br>\begin{align*}<br>\text{Joint} &amp;&#x3D;\ \ \  \text{Single} +\text{Conditional}\<br>H(X,Y) &amp;&#x3D;\ \ \  H(X) +H(Y \mid X)\<br>H(X_1,\dots, X_2) &amp;&#x3D;\ \ \  \sum\limits_{i&#x3D;1}^n H(X_i\mid X_{i-1},\dots,X_1)<br>\end{align*}<br>$$<br><strong>Relative Entropy</strong> (KL Divergence):</p>
+<p>A measure of the <strong>distance</strong> between two distributions, extra bits needed for describing another r.v. based on the given r.v.<br>$$<br>D(p \parallel q) &#x3D; \sum\limits_{x\in\mathcal X}p(x)\log\frac {p(x)}{q(x)}<br>$$</p>
+<blockquote>
+<p>$$<br>D(p \parallel q) \ne D(q \parallel p)<br>$$</p>
+</blockquote>
+<p><strong>Mutual Information</strong>: </p>
+<p>The relative entropy between the joint distribution and the product distribution.<br>$$<br>I(X; Y) &#x3D; -\sum\limits_{x\in\mathcal X}\sum\limits_{y\in\mathcal Y}p(x,y)\log \frac {p(x, y)}{p(x)p(y)} &#x3D; D(p(x,y)\parallel p(x)p(y))<br>$$</p>
+<blockquote>
+<p>$$<br>\begin{align*}<br>I(X;Y) &amp;&#x3D; H(X) - H(X\mid Y)\<br>I(X;Y) &amp;&#x3D; H(Y) - H(Y\mid X)\<br>I(X;Y) &amp;&#x3D; H(X) + H(Y) - H(X, Y)\<br>I(X;Y) &amp;&#x3D; I(Y;X)\<br>I(X;X) &amp;&#x3D; H(X)<br>\end{align*}<br>$$</p>
+</blockquote>
+<p><strong>Conditional Mutual Information</strong>:<br>$$<br>\begin{align*}<br>I(X;Y\mid Z) &amp;&#x3D; H(X\mid Z) - H(X\mid Y,Z)\<br>&amp;&#x3D; E_{p(x,y,z)}\log\frac{p(X,Y\mid Z)}{p(X\mid Z)p(Y\mid Z)}<br>\end{align*}<br>$$<br><strong>Chain Rule for Mutual Information</strong>:<br>$$<br>I(X_1,\dots,X_n;Y) &#x3D; \sum\limits_{i&#x3D;1}^n I(X_i;Y\mid X_{i-1},\dots,X_1)<br>$$<br><strong>Conditional Relative Entropy</strong>:</p>
+<p>Given joint probability mass functions $p(x, y)$ and $q(x, y)$, the conditional relative entropy is:<br>$$<br>\begin{align*}<br>D(p(y \mid x) \parallel q(y \mid x)) &amp; &#x3D;\sum_{x} p(x) \sum_{y} p(y \mid x) \log \frac{p(y \mid x)}{q(y \mid x)} \<br>&amp; &#x3D;E_{p(x, y)} \log \frac{p(Y \mid X)}{q(Y \mid X)}<br>\end{align*}<br>$$<br><strong>Chain Rule for Relative Entropy</strong><br>$$<br>D(p(x,y)\parallel q(x,y)) &#x3D; D(p(x)\parallel q(x)) + D (p(y\mid x)\parallel q(y\mid x))<br>$$<br><strong>Another way to explain mutual information</strong><br>$$<br>I(X;Y) &#x3D; D(p(x,y)| p(x)p(y))<br>$$<br>For r.v. $X,Y \sim p(x,y) $, $\tilde X, \tilde Y \sim q(x,y)$:</p>
+<p>If $q(x,y) &#x3D; p(x)\cdot p(y)$, then $q(x) &#x3D; p(x)$, $q(y) &#x3D; p(y)$</p>
+<p>Therefore $q(x,y) &#x3D; q(x) \cdot q(y)$, $\tilde X \bot \tilde Y$ .</p>
+<h2 id="Chapter-2-Inequalities"><a href="#Chapter-2-Inequalities" class="headerlink" title="Chapter 2: Inequalities"></a>Chapter 2: Inequalities</h2><p>$f(x)$ is <strong>convex</strong> IFF over $(a,b)$, $\forall x_1,x_2 \in (a,b)$ and $0\le \lambda \le 1$ :<br>$$<br>f(\lambda x_1+(1-\lambda)x_2) \le \lambda f(x_1) + (1-\lambda) f(x_2)<br>$$<br>$f(x)$ is <strong>strictly convex</strong> if equality holds only if $\lambda &#x3D; 0&#x2F;1$.</p>
+<p>$f(x)$ is <strong>concave</strong> if $-f(x)$ is convex. </p>
+<p><strong>Theorem: Jensen’s Equality</strong></p>
+<p>For convex function $f(x)$ and r.v. $X$, $E[f(X)] \ge f(E[X])$. If strict convex, equality holds only if $X$ is constant.</p>
+<p>Proof by induction.</p>
+<p><strong>Theorem: Information Inequality</strong></p>
+<p>For any probability mass function $p(x)$ and $q(x)$, $D(p(x)|q(x)) \ge 0$.</p>
+<p>Equality IFF $\forall x, p(x)&#x3D;q(x)$.</p>
+<p><strong>Theorem: Nonnegativity of mutual information</strong></p>
+<p>For any random variables $X$, $Y$, $I(X;Y)&#x3D;D(p(x,y)|p(x)p(y))\ge 0$.</p>
+<p>Equality IFF $X \bot Y$.</p>
+<blockquote>
+<p>Corollaries</p>
+<ul>
+<li><p>$D(p(y|x)|q(y|x))\ge0$, with equality IFF<br>$$<br>\forall y\forall x \text{\ s.t.\ } p(x)&gt;0, p(y|x)&#x3D;q(y|x).<br>$$</p>
+</li>
+<li></li>
+<li><p>$I(X;Y|Z)\ge0$, with equality IFF $X$ and $Y$ are conditionally independent given $Z$.</p>
+</li>
+</ul>
+</blockquote>
+<p><strong>Theorem: The maximum entropy distribution</strong></p>
+<p>For discrete r.v. $X$, $H(X)\le \log | \mathcal X |$, with equality IFF $X$ has a uniform distribution over $|\mathcal X|$.<br>$$<br>u(x)&#x3D;\frac 1 {|\mathcal X|}, \forall p(x), 0 \le D(p|u)&#x3D;\sum\limits_x p(x) \log \frac{p(x)}{u(x)} &#x3D; \log |\mathcal X| - H(X)<br>$$<br><strong>Theorem: Conditioning reduces entropy</strong></p>
+<p>$H(X|Y)\le H(X)$ with equality IFF $X\bot Y$.</p>
+<p><strong>Theorem: Independence bound on entropy</strong></p>
+<p>$H(X_1,\dots,X_n)\le\sum\limits_{i&#x3D;1}^n H(X_i)$ with equality IFF $\forall i\ne j, X_i\bot X_j$</p>
+<p><strong>Markov Chain</strong></p>
+<p>Random variables ${X_n}$ form a Markov chain $X_1\rightarrow\cdots\rightarrow X_n$if the p.m.f. satisfies<br>$$<br>p(x_i|x_1,\dots,x_{i-1}) &#x3D; p(x_i|x_i-1)<br>$$</p>
+<blockquote>
+<p>Properties</p>
+<ul>
+<li>$X\rightarrow  Y\rightarrow Z\implies p(x,z|y)&#x3D;p(x|y)p(z|y)$</li>
+<li>$X\rightarrow  Y\rightarrow Z\implies  Z\rightarrow  Y\rightarrow X$</li>
+<li>If $Z&#x3D;f(Y)$, then $X\rightarrow  Y\rightarrow Z$.</li>
+</ul>
+</blockquote>
+<p><strong>Theorem: Data-processing inequality</strong></p>
+<p>If $X\rightarrow Y \rightarrow Z$, then $I(X;Y)\ge I(X;Z)$.<br>$$<br>\begin{align*}<br>I(X;Y,Z) &amp;&#x3D; I(X;Z) + I(X;Y|Z)\<br>&amp;&#x3D; I(X;Y) + I(X;Z|Y)<br>\end{align*}<br>$$<br>Since $X\rightarrow Y \rightarrow Z$, we have $I(X;Z|Y)&#x3D;0$. Since $I(X;Y|Z)\ge 0$, it holds.</p>
+<blockquote>
+<p>Corollaries</p>
+<p>In particular, if $Z &#x3D; g(Y)$, we have $I(X; Y ) ≥ I(X; g(Y ))$.</p>
+<p>If $X\rightarrow  Y\rightarrow Z$, then $I(X; Y |Z) ≤ I(X; Y )$.</p>
+</blockquote>
+<p><strong>Zero conditional entropy</strong></p>
+<p>The conditional entropy of a random variable $X$ given another random variable $Y$ is zero ($H(X|Y ) &#x3D; 0$) IFF $X$ is a function of $Y$. Hence we can estimate $X$ from $Y$ with zero probability of error IFF $H(X|Y)$ &#x3D; 0.</p>
+<p><strong>Fano’s inequality</strong></p>
+<p>A random variable $Y$ is related to another random variable $X$ with a distribution $p(x)$. From $Y$, we calculate a function $g(Y ) &#x3D; \hat X$, where $\hat X$ is an estimate of $X$ and takes on values in $\hat X$. For Markov chain $X → Y → \hat X$, the estimate error probability $P_e &#x3D; \text{Pr}[\hat X\ne X]$ satisfies<br>$$<br>H(P_e)+P_e\log(|\mathcal X|-1)\ge H(X|\hat X)\ge H(X|Y).<br>$$<br>This inequality can be weakened to<br>$$<br>1+P_e\log(|\mathcal X|-1) \ge H(X|Y)\<br>P_e \ge \frac{H(X|Y)-1}{\log |\mathcal X|-1}.<br>$$</p>
+<blockquote>
+<p>Corollaries</p>
+<p>For any two r.v. $X$ and $Y$, let $p&#x3D;\text{Pr}[X\ne Y]$, $H(p)+p\log (|\mathcal X|-1)\ge H(X|Y)$.</p>
+<p>If $X$ and $X^\prime$ are i.i.d. with entropy $H(X)$, $\text{Pr}[X&#x3D;X^\prime]\ge 2^{-H(X)}$, with equality IFF $X$ has a uniform distribution.</p>
+</blockquote>
+<h2 id="Chapter-3-Asymptotic-Equipartition-Property"><a href="#Chapter-3-Asymptotic-Equipartition-Property" class="headerlink" title="Chapter 3: Asymptotic Equipartition Property"></a>Chapter 3: Asymptotic Equipartition Property</h2><p><strong>Theorem: Weak Law of Large Number</strong></p>
+<p>For i.i.d.r.v. ${X_n}$, $\frac 1 n \sum\limits_{i&#x3D;1}^n X_i \rightarrow E[X]$ in probability, i.e.,<br>$$<br>\forall \epsilon &gt;0, \mathop{\text{lim}}\limits_{n\rightarrow \infty} \text{Pr}\left[\left|\frac 1 n \sum\limits_{i&#x3D;1}^n X_i-E[X]\right|\le \epsilon\right]&#x3D;1<br>$$<br><strong>Theorem: Asymptotic Equipartition Property (AEP)</strong></p>
+<p>For i.i.d.r.v. ${X_n}\sim p(x)$, $-\frac 1 n \log p(X_1,\dots,X_n)\rightarrow H(X)$ in probability.</p>
+<blockquote>
+<p>Proof using the weak law of large number<br>$$<br>\begin{align*}<br>-\frac 1 n \log p(X_1,\dots,X_n) &amp;&#x3D; -\frac 1 n \sum\limits_i \log p(X_i)\<br>&amp;\rightarrow -E[\log p(x)]\ \text{ in probability}\<br>&amp;&#x3D; H(X)<br>\end{align*}<br>$$</p>
+</blockquote>
+<p><strong>Typical Set</strong></p>
+<p>A typical set $A_\epsilon^{(n)}$ contains all sequence realizations $(x_1,\dots,x_n)\in \mathcal X^n$ of i.i.d.r.v. sequence $(X_1,\dots,X_n)$, satisfying<br>$$<br>2^{-n(H(X)+\epsilon)}\le p(x_1,\dots,x_n) \le2^{-n(H(X)-\epsilon)}<br>$$</p>
+<ul>
+<li><p>If $(x_1,\dots,x_n)\in A_\epsilon^{(n)}$, then $H(X)-\epsilon\le -\frac 1 n \log p(x_1,\dots,x_n)\le H(X)+\epsilon$</p>
+</li>
+<li><p>$|A_\epsilon^{(n)}|\le 2^{n(H(X)+\epsilon)}$</p>
+</li>
+<li><p>If $n$ is sufficiently large,</p>
+<ul>
+<li>$\text{Pr}[(X_1,\dots,X_n)\in A_\epsilon^{(n)}] &gt; 1-\epsilon$</li>
+<li>$|A_\epsilon^{(n)}|\ge (1-\epsilon) 2^{n(H(X)-\epsilon)}$</li>
+</ul>
+</li>
+</ul>
+<p>Let $X^n$ be i.i.d. $\sim p(x)$. There exists a code that one-to-one maps sequences $x^n$ of length $n$ into binary strings with<br>$$<br>E[\frac 1 n \mathscr l (X^n)] \le H(X) + \epsilon<br>$$<br>for $n$ sufficiently large.</p>
+<h2 id="Chapter-5-Source-Coding"><a href="#Chapter-5-Source-Coding" class="headerlink" title="Chapter 5: Source Coding"></a>Chapter 5: Source Coding</h2><p>Goal: develop practical lossless coding algorithms approaching(achieving) the best achievable data compression $H(X)$.</p>
+<p><strong>Terminology</strong>: source alphabet, code alphabet, codeword, codeword length, codebook.</p>
+<p>&#x2F;&#x2F; ignored some intermediate contents</p>
+<p><strong>Theorem: Kraft Inequality</strong></p>
+<p>For any prefix code over an alphabet of size $D$, the codeword lengths $\mathscr l_1, \dots, \mathscr l_m$ must satisfy the inequality<br>$$<br>\sum\limits_i D^{-\mathscr l_i} \le 1<br>$$<br>Conversely, given a set of codeword lengths satisfying this inequality, there exists a prefix code with these codeword lengths.</p>
+<p>Proof: $\sum\limits_i D^{\mathscr l_{\max}-\mathscr l_i}\le D ^{\mathscr l_\max} \implies \sum\limits_i D^{-\mathscr l_i} \le 1$</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/01/11/CS334_Final_Review/" rel="prev" title="CS334 操作系统 期末复习">
+                  <i class="fa fa-angle-left"></i> CS334 操作系统 期末复习
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">萌ICP备20269202号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Gu Tao</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

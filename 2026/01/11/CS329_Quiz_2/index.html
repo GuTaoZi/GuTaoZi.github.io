@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-32x32.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"gutaozi.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Quiz 2 for ML, ML and MAP over Guassian Mixture and Logistic Regression">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS329 Machine Learning Quiz 2">
+<meta property="og:url" content="https://gutaozi.github.io/2026/01/11/CS329_Quiz_2/index.html">
+<meta property="og:site_name" content="GuTao&#39;s Nest">
+<meta property="og:description" content="Quiz 2 for ML, ML and MAP over Guassian Mixture and Logistic Regression">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-01-11T08:44:56.381Z">
+<meta property="article:modified_time" content="2026-01-11T08:44:56.445Z">
+<meta property="article:author" content="Gu Tao">
+<meta property="article:tag" content="Artificial Intelligence">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://gutaozi.github.io/2026/01/11/CS329_Quiz_2/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://gutaozi.github.io/2026/01/11/CS329_Quiz_2/","path":"2026/01/11/CS329_Quiz_2/","title":"CS329 Machine Learning Quiz 2"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CS329 Machine Learning Quiz 2 | GuTao's Nest</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">GuTao's Nest</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Before-Quiz"><span class="nav-number">1.</span> <span class="nav-text">Before Quiz</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Question-1-Generative-Gaussian-Mixture"><span class="nav-number">2.</span> <span class="nav-text">Question 1 Generative Gaussian Mixture</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Question-1-1"><span class="nav-number">2.1.</span> <span class="nav-text">Question 1.1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Solution-1-1"><span class="nav-number">2.2.</span> <span class="nav-text">Solution 1.1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Question-1-2"><span class="nav-number">2.3.</span> <span class="nav-text">Question 1.2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Solution-1-2"><span class="nav-number">2.4.</span> <span class="nav-text">Solution 1.2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Question-1-3"><span class="nav-number">2.5.</span> <span class="nav-text">Question 1.3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Solution-1-3"><span class="nav-number">2.6.</span> <span class="nav-text">Solution 1.3</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Question-2-Discriminative-Logistic-Regression"><span class="nav-number">3.</span> <span class="nav-text">Question 2 Discriminative Logistic Regression</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Question-2-1"><span class="nav-number">3.1.</span> <span class="nav-text">Question 2.1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Solution-2-1"><span class="nav-number">3.2.</span> <span class="nav-text">Solution 2.1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Question-2-2"><span class="nav-number">3.3.</span> <span class="nav-text">Question 2.2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Solution-2-2"><span class="nav-number">3.4.</span> <span class="nav-text">Solution 2.2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Question-2-3"><span class="nav-number">3.5.</span> <span class="nav-text">Question 2.3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Solution-2-3"><span class="nav-number">3.6.</span> <span class="nav-text">Solution 2.3</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Gu Tao"
+      src="https://avatars.githubusercontent.com/u/109007949?v=4">
+  <p class="site-author-name" itemprop="name">Gu Tao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/gutaozi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;gutaozi" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gutao.official@gmail.com" title="E-Mail → mailto:gutao.official@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gutaozi.github.io/2026/01/11/CS329_Quiz_2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/109007949?v=4">
+      <meta itemprop="name" content="Gu Tao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuTao's Nest">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CS329 Machine Learning Quiz 2 | GuTao's Nest">
+      <meta itemprop="description" content="Quiz 2 for ML, ML and MAP over Guassian Mixture and Logistic Regression">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CS329 Machine Learning Quiz 2
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2026-01-11 16:44:56" itemprop="dateCreated datePublished" datetime="2026-01-11T16:44:56+08:00">2026-01-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/CS/" itemprop="url" rel="index"><span itemprop="name">CS</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">Quiz 2 for ML, ML and MAP over Guassian Mixture and Logistic Regression</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="Before-Quiz"><a href="#Before-Quiz" class="headerlink" title="Before Quiz"></a>Before Quiz</h3><p>$$<br>\begin{align*}<br>&amp;-(a_0-1)\ln\pi - (b_0-1)\ln(1-\pi) \quad &amp;\text{prior of }\pi\<br>&amp;+\frac 1 2(\mu_1-m_{10})^\text T \Sigma_{10}^{-1}(\mu_1-m_{10}) \quad &amp;\text{prior of }\mu_1\<br>&amp;+\frac 1 2(\mu_2-m_{20})^\text T \Sigma_{20}^{-1}(\mu_2-m_{20})\quad &amp;\text{prior of }\mu_2\<br>&amp;+\sum\limits_{n&#x3D;1}^N[t_n\ln\left(\pi\mathcal N (x\vert\mu_1,\Sigma_1)\right)+(1-t_n)\ln((1-\pi)\mathcal N (x\vert\mu_2,\Sigma_2))]\quad&amp;\text{Likelihood}<br>\end{align*}<br>$$</p>
+<hr>
+<h3 id="Question-1-Generative-Gaussian-Mixture"><a href="#Question-1-Generative-Gaussian-Mixture" class="headerlink" title="Question 1 Generative Gaussian Mixture"></a>Question 1 Generative Gaussian Mixture</h3><h4 id="Question-1-1"><a href="#Question-1-1" class="headerlink" title="Question 1.1"></a>Question 1.1</h4><p>$p(x)&#x3D;\pi\mathcal N(x\vert\mu_1,\Sigma_1)+(1-\pi)\mathcal N(x\vert\mu_2,\Sigma_2)$</p>
+<p>Given $\mathbf x&#x3D;[x_1,\dots,x_N]$, $\mathbf t&#x3D;[t_1,\dots,t_N]$</p>
+<p>What’s the ML estimation of $\mu_1,\Sigma_1,\mu_2,\Sigma_2,\pi$?</p>
+<h4 id="Solution-1-1"><a href="#Solution-1-1" class="headerlink" title="Solution 1.1"></a>Solution 1.1</h4><p>Derive log-likelihood function w.r.t. $\pi$,<br>$$<br>\frac{\partial}{\partial \pi}L&#x3D;\frac{\partial}{\partial \pi}\sum\limits_{n&#x3D;1}^N {t_n\ln\pi+(1-t_n)\ln(1-\pi)}&#x3D;\frac{N_1}{\pi}+\frac{N_2}{\pi-1}&#x3D;0<br>$$<br>Derive log-likelihood function w.r.t. $\mu_i$,<br>$$<br>\begin{align*}<br>\frac{\partial}{\partial \mu_1}L &amp;&#x3D; \frac{\partial}{\partial \mu_1} \sum\limits_{n&#x3D;1}^N t_n\ln\mathcal N(x_n\vert,\mu_1,\Sigma_1)\<br>&amp;&#x3D;\frac{\partial}{\partial \mu_1} -\frac 1 2 \sum\limits_{n&#x3D;1}^N t_n(x_n-\mu_1)^\text T \Sigma_1^{-1}(x_n-\mu_1)\<br>&amp;&#x3D;0\<br>\frac{\partial}{\partial \mu_2}L &amp;&#x3D; \frac{\partial}{\partial \mu_2} \sum\limits_{n&#x3D;1}^N (1-t_n)\ln\mathcal N(x_n\vert,\mu_2,\Sigma_2)\<br>&amp;&#x3D;\frac{\partial}{\partial \mu_2} -\frac 1 2 \sum\limits_{n&#x3D;1}^N (1-t_n)(x_n-\mu_2)^\text T \Sigma_1^{-1}(x_n-\mu_2)\<br>&amp;&#x3D;0<br>\end{align*}<br>$$<br>Derive log-likelihood function w.r.t. $\Sigma_i$,<br>$$<br>\begin{align*}<br>\frac{\partial}{\partial \Sigma_1} L &amp;&#x3D; \frac{\partial}{\partial \Sigma_1} \left(-\frac 1 2 \sum\limits_{n&#x3D;1}^N t_n\ln |\Sigma_1|-\frac1 2 \sum\limits_{n&#x3D;1}^N t_n(x_n-\mu_1)^\text T \Sigma_1^{-1}(x_n-\mu_1)\right)&#x3D;0\<br>\frac{\partial}{\partial \Sigma_2} L &amp;&#x3D; \frac{\partial}{\partial \Sigma_2} \left(-\frac 1 2 \sum\limits_{n&#x3D;1}^N (1-t_n)\ln |\Sigma_2|-\frac1 2 \sum\limits_{n&#x3D;1}^N (1-t_n)(x_n-\mu_2)^\text T \Sigma_2^{-1}(x_n-\mu_2)\right)&#x3D;0<br>\end{align*}<br>$$<br>Hence we have<br>$$<br>\begin{align*}<br>\pi_\text{ML} &amp;&#x3D; \frac 1 N \sum\limits_{n&#x3D;1}^N t_n &#x3D;\frac{N_1}{N}&#x3D;\frac{N_1}{N_1+N_2}\<br>\mu_{1\text{ML}} &amp;&#x3D; \frac 1 {N_1}\sum\limits_{n&#x3D;1}^Nt_n x_n\<br>\mu_{2\text{ML}} &amp;&#x3D; \frac 1 {N_2}\sum\limits_{n&#x3D;1}^N(1-t_n) x_n\<br>\Sigma_{1\text{ML}} &amp;&#x3D;\frac 1 {N_1}\sum\limits_{x_n\in\mathcal C_1} (x_n-\mu_{1\text{ML}})(x_n-\mu_{1\text{ML}})^\text T\<br>\Sigma_{2\text{ML}} &amp;&#x3D;\frac 1 {N_2}\sum\limits_{x_n\in\mathcal C_2} (x_n-\mu_{2\text{ML}})(x_n-\mu_{2\text{ML}})^\text T<br>\end{align*}<br>$$</p>
+<p>where</p>
+<ul>
+<li>$N_1$ is the number of data points in class 1,</li>
+<li>$N_2$ is the number of data points in class 2.</li>
+</ul>
+<h4 id="Question-1-2"><a href="#Question-1-2" class="headerlink" title="Question 1.2"></a>Question 1.2</h4><p>$\pi\sim beta(a_0,b_0), p(\mu_i) &#x3D; \mathcal N(m_{i0},\Sigma_{i0}), i&#x3D;1,2$</p>
+<p>Given $\mathbf x&#x3D;[x_1,\dots,x_N]$, $\mathbf t&#x3D;[t_1,\dots,t_N]$</p>
+<p>What’s the MAP estimation of $\mu_1,\Sigma_1,\mu_2,\Sigma_2,\pi$?</p>
+<h4 id="Solution-1-2"><a href="#Solution-1-2" class="headerlink" title="Solution 1.2"></a>Solution 1.2</h4><p>Posterior of $\pi$:<br>$$<br>\begin{align*}<br>p(\pi|\mathbf{t}) &amp;\propto p(\mathbf{t}|\pi) \cdot p(\pi)\<br>&amp;&#x3D; \pi^{N_1} \cdot (1 - \pi)^{N_2} \cdot \pi^{a_0-1} \cdot (1-\pi)^{b_0-1}\<br>&amp;&#x3D; \pi^{N_1 + a_0 - 1} \cdot (1 - \pi)^{N_2 + b_0 - 1}<br>\end{align*}<br>$$<br>By using the property of product of Gaussian distributions, we obtain the MAP estimation of $\mu_i$ and $\Sigma_i$<br>$$<br>\begin{align*}<br>\pi_\text{MAP} &amp;&#x3D; \frac{N_1+a_{0}-1}{N+a_0+b_0-2}&#x3D;\frac{N_1+a_0-1}{N_1+N_2+a_0+b_0-2}\<br>\Sigma_{1\text{MAP}} &amp;&#x3D;({\Sigma_{1\text{ML}}}^{-1}+{\Sigma_{10}}^{-1})^{-1}\<br>\Sigma_{2\text{MAP}} &amp;&#x3D;({\Sigma_{2\text{ML}}}^{-1}+{\Sigma_{20}}^{-1})^{-1}\<br>\mu_{1\text{MAP}} &amp;&#x3D; \Sigma_{1\text{MAP}}({\Sigma_{1\text{ML}}}^{-1}\mu_{1\text{ML}}+{\Sigma_{10}}^{-1}m_{10})\<br>\mu_{2\text{MAP}} &amp;&#x3D; \Sigma_{2\text{MAP}}({\Sigma_{2\text{ML}}}^{-1}\mu_{2\text{ML}}+{\Sigma_{20}}^{-1}m_{20})\<br>\end{align*}<br>$$</p>
+<h4 id="Question-1-3"><a href="#Question-1-3" class="headerlink" title="Question 1.3"></a>Question 1.3</h4><p>What’s $p(\mathcal C_1\vert x)$ for ML and MAP models respectively?</p>
+<h4 id="Solution-1-3"><a href="#Solution-1-3" class="headerlink" title="Solution 1.3"></a>Solution 1.3</h4><p>By Bayes’ Theorem,<br>$$<br>\begin{align*}<br>p_\text{ML}(\mathcal C_1\vert x)&amp;&#x3D;\frac{p_\text{ML}(x,\mathcal C_1)}{p_\text{ML}(x)}&#x3D;\frac{\pi_\text{ML}\mathcal N(x\vert\mu_\text{1ML},\Sigma_\text{1ML})}{\pi_\text{ML}\mathcal N(x\vert\mu_\text{1ML},\Sigma_\text{1ML})+(1-\pi_\text{ML})\mathcal N(x\vert\mu_\text{2ML},\Sigma_\text{2ML})}\<br>p_\text{MAP}(\mathcal C_1\vert x)&amp;&#x3D;\frac{p_\text{MAP}(x,\mathcal C_1)}{p_\text{MAP}(x)}&#x3D;\frac{\pi_\text{MAP}\mathcal N(x\vert\mu_\text{1MAP},\Sigma_\text{1MAP})}{\pi_\text{MAP}\mathcal N(x\vert\mu_\text{1MAP},\Sigma_\text{1MAP})+(1-\pi_\text{MAP})\mathcal N(x\vert\mu_\text{2MAP},\Sigma_\text{2MAP})}<br>\end{align*}<br>$$</p>
+<hr>
+<h3 id="Question-2-Discriminative-Logistic-Regression"><a href="#Question-2-Discriminative-Logistic-Regression" class="headerlink" title="Question 2 Discriminative Logistic Regression"></a>Question 2 Discriminative Logistic Regression</h3><h4 id="Question-2-1"><a href="#Question-2-1" class="headerlink" title="Question 2.1"></a>Question 2.1</h4><p>$y&#x3D;\sigma(w^\text T\phi(x))$</p>
+<p>Given $\mathbf x&#x3D;[x_1,\dots,x_N]$, $\mathbf t&#x3D;[t_1,\dots,t_N]$</p>
+<p>What’s the ML estimation of $q(w)$?</p>
+<h4 id="Solution-2-1"><a href="#Solution-2-1" class="headerlink" title="Solution 2.1"></a>Solution 2.1</h4><p>By Gauss-Newton iteration: $w^\text{new}&#x3D;w^\text{old}-H^{-1}\nabla E(w)$, we obtain $w_\text{ML}$,</p>
+<p>where<br>$$<br>\begin{align*}<br>E(w) &amp;&#x3D; -\sum\limits_{n&#x3D;1}^N  [t_n\ln y_n + (1-t_n)\ln(1-y_n)]\<br>\nabla E(w) &amp;&#x3D; \sum\limits_{n&#x3D;1}^N (y_n-t_n)\phi(x_n)\<br>\text{step size}\quad H &amp;&#x3D; \nabla^2 E(w) &#x3D; \sum\limits_{n&#x3D;1}^N y_n(1-y_n)\phi(x_n)\phi(x_n)^\text T<br>\end{align*}<br>$$<br>Hence<br>$$<br>q(w) &#x3D; \mathcal N(w\vert w_\text{ML}, H^{-1})<br>$$</p>
+<h4 id="Question-2-2"><a href="#Question-2-2" class="headerlink" title="Question 2.2"></a>Question 2.2</h4><p>$y&#x3D;\sigma(w^\text T\phi(x))$, $p(w)\sim\mathcal N(m_0,\Sigma_0)$</p>
+<p>Given $\mathbf x&#x3D;[x_1,\dots,x_N]$, $\mathbf t&#x3D;[t_1,\dots,t_N]$</p>
+<p>What’s the MAP estimation of $q(w)$?</p>
+<h4 id="Solution-2-2"><a href="#Solution-2-2" class="headerlink" title="Solution 2.2"></a>Solution 2.2</h4><p>By Gauss-Newton iteration: $w^\text{new}&#x3D;w^\text{old}-H^{-1}\nabla E(w)$, we obtain $w_\text{ML}$,</p>
+<p>where<br>$$<br>\begin{align*}<br>E(w) &amp;&#x3D; \frac{1}{2} (w-m_0)^\text T\Sigma_0^{-1}(w-m_0)-\sum\limits_{n&#x3D;1}^N  [t_n\ln y_n + (1-t_n)\ln(1-y_n)]\<br>\nabla E(w) &amp;&#x3D;\Sigma_0^{-1}(w-m_0)+ \sum\limits_{n&#x3D;1}^N (y_n-t_n)\phi(x_n)\<br>\text{step size}\quad H &amp;&#x3D; \nabla^2 E(w) &#x3D; \Sigma_0^{-1}+\sum\limits_{n&#x3D;1}^N y_n(1-y_n)\phi(x_n)\phi(x_n)^\text T<br>\end{align*}<br>$$<br>Hence<br>$$<br>q(w) &#x3D; \mathcal N(w\vert w_\text{MAP}, H^{-1})<br>$$</p>
+<h4 id="Question-2-3"><a href="#Question-2-3" class="headerlink" title="Question 2.3"></a>Question 2.3</h4><p>What’s $p(t\vert y(w,x))$ for ML and MAP estimation, respectively?</p>
+<h4 id="Solution-2-3"><a href="#Solution-2-3" class="headerlink" title="Solution 2.3"></a>Solution 2.3</h4><p>Probability of $t&#x3D;1$ w.r.t. ML and MAP estimations<br>$$<br>\begin{align*}<br>p_\text{ML}(t&#x3D;1\vert y(w_\text{ML},x)) &amp;&#x3D; \sigma(w_\text{ML}^\text T\phi(x)) &#x3D; \frac{1}{1+\exp(-w_\text{ML}^\text T\phi(x))}\<br>p_\text{MAP}(t&#x3D;1\vert y(w_\text{MAP},x)) &amp;&#x3D; \sigma(w_\text{MAP}^\text T\phi(x))&#x3D; \frac{1}{1+\exp(-w_\text{MAP}^\text T\phi(x))}\<br>\end{align*}<br>$$</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Artificial-Intelligence/" rel="tag"># Artificial Intelligence</a>
+              <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/01/11/CS329_Quiz_1/" rel="prev" title="CS329 Machine Learning Quiz 1">
+                  <i class="fa fa-angle-left"></i> CS329 Machine Learning Quiz 1
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/01/11/CS329_Quiz_3/" rel="next" title="CS329 Machine Learning Quiz 3">
+                  CS329 Machine Learning Quiz 3 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">萌ICP备20269202号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Gu Tao</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

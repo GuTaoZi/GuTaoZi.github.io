@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-32x32.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"gutaozi.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="Notes for Compilers">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS323 Compilers Notes">
+<meta property="og:url" content="https://gutaozi.github.io/2026/01/11/CS323_Notes/index.html">
+<meta property="og:site_name" content="GuTao&#39;s Nest">
+<meta property="og:description" content="Notes for Compilers">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s2.loli.net/2023/09/18/SGh7Y2mHFJ8bM63.png">
+<meta property="og:image" content="https://s2.loli.net/2023/09/18/5u4hoNQi9xWJHtz.png">
+<meta property="og:image" content="https://s2.loli.net/2023/09/25/3sFkCmprPOjaqN7.png">
+<meta property="og:image" content="https://s2.loli.net/2023/09/25/pMlOHkGaq45ifB2.png">
+<meta property="og:image" content="https://s2.loli.net/2023/09/25/dGVNmClnbRIA8PJ.png">
+<meta property="og:image" content="https://s2.loli.net/2023/09/25/aLXCdiM1eEKwOZ9.png">
+<meta property="og:image" content="https://s2.loli.net/2023/09/25/nDjpL8lB63obcd7.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/30/oQ9C7ZeFxlgnGVz.png">
+<meta property="og:image" content="https://s2.loli.net/2023/10/30/Hzdupvr4iQgjnZ7.png">
+<meta property="og:image" content="https://s2.loli.net/2023/11/06/uoc1pBe6k59AlbW.png">
+<meta property="og:image" content="https://s2.loli.net/2023/11/13/BYo6XWehN9zCcI8.png">
+<meta property="og:image" content="https://s2.loli.net/2023/11/20/8D9WbjlcOyYTNVG.png">
+<meta property="og:image" content="https://s2.loli.net/2023/12/04/1MVKkRTN7OhLD92.png">
+<meta property="og:image" content="https://s2.loli.net/2023/12/04/2PFSER4gfVUXeDs.png">
+<meta property="og:image" content="https://s2.loli.net/2023/12/04/nXtKLFJpgyzlRPq.png">
+<meta property="og:image" content="https://s2.loli.net/2023/12/11/znC6vQO8LWHBAmY.png">
+<meta property="og:image" content="https://s2.loli.net/2023/12/25/JalFPwqVXQy8Z6c.png">
+<meta property="og:image" content="https://s2.loli.net/2023/12/25/IbRe8LCfOJYjKio.png">
+<meta property="article:published_time" content="2026-01-11T08:44:55.413Z">
+<meta property="article:modified_time" content="2026-01-11T08:44:55.465Z">
+<meta property="article:author" content="Gu Tao">
+<meta property="article:tag" content="Compiler">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/09/18/SGh7Y2mHFJ8bM63.png">
+
+
+<link rel="canonical" href="https://gutaozi.github.io/2026/01/11/CS323_Notes/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://gutaozi.github.io/2026/01/11/CS323_Notes/","path":"2026/01/11/CS323_Notes/","title":"CS323 Compilers Notes"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CS323 Compilers Notes | GuTao's Nest</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">GuTao's Nest</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Outline"><span class="nav-number">1.</span> <span class="nav-text">Outline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lecture-1-Introduction"><span class="nav-number">2.</span> <span class="nav-text">Lecture 1 - Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Evolution-of-Programming-Languages"><span class="nav-number">2.1.</span> <span class="nav-text">The Evolution of Programming Languages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Compiler-Structure"><span class="nav-number">2.2.</span> <span class="nav-text">Compiler Structure</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Frontend"><span class="nav-number">2.2.1.</span> <span class="nav-text">Frontend</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Backend"><span class="nav-number">2.2.2.</span> <span class="nav-text">Backend</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lexical-Analysis"><span class="nav-number">2.2.3.</span> <span class="nav-text">Lexical Analysis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Syntax-Analysis"><span class="nav-number">2.2.4.</span> <span class="nav-text">Syntax Analysis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Semantic-Analysis"><span class="nav-number">2.2.5.</span> <span class="nav-text">Semantic Analysis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Intermediate-Code-Generation"><span class="nav-number">2.2.6.</span> <span class="nav-text">Intermediate Code Generation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Machine-Independent-Code-Optimization"><span class="nav-number">2.2.7.</span> <span class="nav-text">Machine-Independent Code Optimization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Code-Generation"><span class="nav-number">2.2.8.</span> <span class="nav-text">Code Generation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Compiler-vs-Interpreters"><span class="nav-number">2.2.9.</span> <span class="nav-text">Compiler vs. Interpreters</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lecture-2-Lexical-Analysis"><span class="nav-number">3.</span> <span class="nav-text">Lecture 2 - Lexical Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Role-of-Lexical-Analyzer"><span class="nav-number">3.1.</span> <span class="nav-text">The Role of Lexical Analyzer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Specification-of-Tokens-Regex"><span class="nav-number">3.2.</span> <span class="nav-text">Specification of  Tokens (Regex)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Recognition-of-Tokens-Transition-Diagrams"><span class="nav-number">3.3.</span> <span class="nav-text">Recognition of Tokens (Transition Diagrams)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lecture-3-Finite-Automata"><span class="nav-number">4.</span> <span class="nav-text">Lecture 3 - Finite Automata</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Automata"><span class="nav-number">4.1.</span> <span class="nav-text">Automata</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#From-Regex-to-Automata"><span class="nav-number">4.2.</span> <span class="nav-text">From Regex to Automata</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Subset-construction"><span class="nav-number">4.2.1.</span> <span class="nav-text">Subset construction</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Thompson%E2%80%99s-Construction"><span class="nav-number">4.2.2.</span> <span class="nav-text">Thompson’s Construction</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DFA%E2%80%99s-for-Lexical-Analyzers"><span class="nav-number">4.3.</span> <span class="nav-text">DFA’s for Lexical Analyzers</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lecture-4-Syntax-Analysis"><span class="nav-number">5.</span> <span class="nav-text">Lecture 4 - Syntax Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction-Syntax-and-Parsers"><span class="nav-number">5.1.</span> <span class="nav-text">Introduction: Syntax and Parsers</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Syntax"><span class="nav-number">5.1.1.</span> <span class="nav-text">Syntax</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Parsers%E2%80%99-Roles"><span class="nav-number">5.1.2.</span> <span class="nav-text">Parsers’ Roles</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Classification-of-Parsers"><span class="nav-number">5.1.3.</span> <span class="nav-text">Classification of Parsers</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Context-Free-Grammars"><span class="nav-number">5.2.</span> <span class="nav-text">Context-Free Grammars</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Formal-definition-of-CFG"><span class="nav-number">5.2.1.</span> <span class="nav-text">Formal definition of CFG</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Derivation-and-parse-tree"><span class="nav-number">5.2.2.</span> <span class="nav-text">Derivation and parse tree</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ambiguity"><span class="nav-number">5.2.3.</span> <span class="nav-text">Ambiguity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CFG-vs-regexp"><span class="nav-number">5.2.4.</span> <span class="nav-text">CFG vs. regexp</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Overview-of-Parsing-Techniques"><span class="nav-number">5.3.</span> <span class="nav-text">Overview of Parsing Techniques</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Top-Down-Parsing"><span class="nav-number">5.4.</span> <span class="nav-text">Top-Down Parsing</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Recursive-Descent-Parsing"><span class="nav-number">5.4.1.</span> <span class="nav-text">Recursive-Descent Parsing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Looking-Ahead"><span class="nav-number">5.4.2.</span> <span class="nav-text">Looking Ahead</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LL-1-Grammars"><span class="nav-number">5.4.3.</span> <span class="nav-text">LL(1) Grammars</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Parsing-Table"><span class="nav-number">5.4.4.</span> <span class="nav-text">Parsing Table</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Non-Recursive-Predictive-Parsing"><span class="nav-number">5.4.5.</span> <span class="nav-text">Non-Recursive Predictive Parsing</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bottom-Up-Parsing"><span class="nav-number">5.5.</span> <span class="nav-text">Bottom-Up Parsing</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Simple-LR-SLR"><span class="nav-number">5.5.1.</span> <span class="nav-text">Simple LR(SLR)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Shift-Reduce-Parsing"><span class="nav-number">5.5.1.1.</span> <span class="nav-text">Shift-Reduce Parsing</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LR-k-Parsers"><span class="nav-number">5.5.1.2.</span> <span class="nav-text">LR(k) Parsers</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LR-0-Items"><span class="nav-number">5.5.1.3.</span> <span class="nav-text">LR(0) Items</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Augmented-Grammar"><span class="nav-number">5.5.1.4.</span> <span class="nav-text">Augmented Grammar</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Closure-of-Item-Sets"><span class="nav-number">5.5.1.5.</span> <span class="nav-text">Closure of Item Sets</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#The-Function-GOTO"><span class="nav-number">5.5.1.6.</span> <span class="nav-text">The Function GOTO</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LR-0-Automaton"><span class="nav-number">5.5.1.7.</span> <span class="nav-text">LR(0) Automaton</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LR-Parser-Structure"><span class="nav-number">5.5.1.8.</span> <span class="nav-text">LR Parser Structure</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ACTION-i-a"><span class="nav-number">5.5.1.9.</span> <span class="nav-text">ACTION$[i,a]$</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LR-Parser-Configurations"><span class="nav-number">5.5.1.10.</span> <span class="nav-text">LR Parser Configurations</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Constructing-SLR-Parsing-Tables"><span class="nav-number">5.5.1.11.</span> <span class="nav-text">Constructing SLR-Parsing Tables</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Weakness"><span class="nav-number">5.5.1.12.</span> <span class="nav-text">Weakness</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Canonical-LR-CLR"><span class="nav-number">5.5.2.</span> <span class="nav-text">Canonical LR(CLR)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#LR-1-Item-A-rightarrow-alpha-cdot-beta-a"><span class="nav-number">5.5.2.1.</span> <span class="nav-text">LR(1) Item: $[A\rightarrow \alpha\cdot\beta,a]$</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Look-ahead-LR-LALR"><span class="nav-number">5.5.3.</span> <span class="nav-text">Look-ahead LR (LALR)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Comparisons-Among-LR-Parsers"><span class="nav-number">5.5.4.</span> <span class="nav-text">Comparisons Among LR Parsers</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lecture-5-Syntax-Directed-Translation"><span class="nav-number">6.</span> <span class="nav-text">Lecture 5 - Syntax-Directed Translation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Syntax-Directed-Definitions"><span class="nav-number">6.1.</span> <span class="nav-text">Syntax-Directed Definitions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Evaluation-Orders-for-SDD%E2%80%99s"><span class="nav-number">6.2.</span> <span class="nav-text">Evaluation Orders for SDD’s</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#S-Attributed-SDD"><span class="nav-number">6.2.1.</span> <span class="nav-text">S-Attributed SDD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#L-Attributed-SDD"><span class="nav-number">6.2.2.</span> <span class="nav-text">L-Attributed SDD</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Syntax-Directed-Translation-Schemes"><span class="nav-number">6.3.</span> <span class="nav-text">Syntax-Directed Translation Schemes</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SDT%E2%80%99s-Implementable-During-Parsing"><span class="nav-number">6.3.1.</span> <span class="nav-text">SDT’s Implementable During Parsing</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lecture-6-Intermediate-Code-Generation"><span class="nav-number">7.</span> <span class="nav-text">Lecture 6 - Intermediate-Code Generation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Intermediate-Representation"><span class="nav-number">7.1.</span> <span class="nav-text">Intermediate Representation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Three-Address-Code"><span class="nav-number">7.2.</span> <span class="nav-text">Three-Address Code</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Instructions"><span class="nav-number">7.2.1.</span> <span class="nav-text">Instructions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Quadruples"><span class="nav-number">7.2.2.</span> <span class="nav-text">Quadruples</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Triples"><span class="nav-number">7.2.3.</span> <span class="nav-text">Triples</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Indirect-Triples"><span class="nav-number">7.2.4.</span> <span class="nav-text">Indirect Triples</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Static-Single-Assignment-Form"><span class="nav-number">7.2.5.</span> <span class="nav-text">Static Single-Assignment Form</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Type-and-Declarations"><span class="nav-number">7.3.</span> <span class="nav-text">Type and Declarations</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Types-and-Type-Checking"><span class="nav-number">7.3.1.</span> <span class="nav-text">Types and Type Checking</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Type-Expressions"><span class="nav-number">7.3.2.</span> <span class="nav-text">Type Expressions</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Translation-of-Expressions"><span class="nav-number">7.4.</span> <span class="nav-text">Translation of Expressions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SDD-for-Expression-Translation"><span class="nav-number">7.4.1.</span> <span class="nav-text">SDD for Expression Translation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Incremental-Translation-Scheme"><span class="nav-number">7.4.2.</span> <span class="nav-text">Incremental Translation Scheme</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Control-Flow"><span class="nav-number">7.5.</span> <span class="nav-text">Control Flow</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Short-Circuit-Behavior"><span class="nav-number">7.5.1.</span> <span class="nav-text">Short Circuit Behavior</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Flow-of-Control-Statements"><span class="nav-number">7.5.2.</span> <span class="nav-text">Flow-of-Control Statements</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Three-Address-Code-for-Booleans"><span class="nav-number">7.5.3.</span> <span class="nav-text">Three-Address Code for Booleans</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lecture-7-Run-Time-Environments"><span class="nav-number">8.</span> <span class="nav-text">Lecture 7 - Run-Time Environments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-Time-Environment"><span class="nav-number">8.1.</span> <span class="nav-text">Run-Time Environment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Storage-Organization"><span class="nav-number">8.2.</span> <span class="nav-text">Storage Organization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stack-Space-Allocation"><span class="nav-number">8.3.</span> <span class="nav-text">Stack Space Allocation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Activation-tree"><span class="nav-number">8.3.1.</span> <span class="nav-text">Activation tree</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Activation-Record"><span class="nav-number">8.3.2.</span> <span class="nav-text">Activation Record</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Calling-Return-Sequences"><span class="nav-number">8.3.3.</span> <span class="nav-text">Calling&#x2F;Return Sequences</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Steps-of-a-calling-return-sequence"><span class="nav-number">8.3.4.</span> <span class="nav-text">Steps of a calling-return sequence</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Heap-Management"><span class="nav-number">8.4.</span> <span class="nav-text">Heap Management</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#The-Memory-Manager"><span class="nav-number">8.4.1.</span> <span class="nav-text">The Memory Manager</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Leveraging-Program-Locality"><span class="nav-number">8.4.2.</span> <span class="nav-text">Leveraging Program Locality</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reducing-Fragmentation"><span class="nav-number">8.4.3.</span> <span class="nav-text">Reducing Fragmentation</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lecture-8-Code-Generation"><span class="nav-number">9.</span> <span class="nav-text">Lecture 8 - Code Generation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Target-Language"><span class="nav-number">9.1.</span> <span class="nav-text">Target Language</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Addressing-modes"><span class="nav-number">9.1.1.</span> <span class="nav-text">Addressing modes</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Addresses-in-the-Target-Code"><span class="nav-number">9.2.</span> <span class="nav-text">Addresses in the Target Code</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Static-Allocation"><span class="nav-number">9.2.1.</span> <span class="nav-text">Static Allocation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Stack-Allocation"><span class="nav-number">9.2.2.</span> <span class="nav-text">Stack Allocation</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Basic-Blocks-and-Flow-Graph"><span class="nav-number">9.3.</span> <span class="nav-text">Basic Blocks and Flow Graph</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Partitioning-Three-Address-Instructions-into-Basic-Blocks"><span class="nav-number">9.3.1.</span> <span class="nav-text">Partitioning Three-Address Instructions into Basic Blocks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Loops"><span class="nav-number">9.3.2.</span> <span class="nav-text">Loops</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Optimization-of-Basic-Blocks"><span class="nav-number">9.4.</span> <span class="nav-text">Optimization of Basic Blocks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Simple-Code-Generator"><span class="nav-number">9.5.</span> <span class="nav-text">Simple Code Generator</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Code-Generation-Algorithm"><span class="nav-number">9.5.1.</span> <span class="nav-text">Code Generation Algorithm</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lecture-9-Introduction-to-Data-Flow-Analysis"><span class="nav-number">10.</span> <span class="nav-text">Lecture 9 - Introduction to Data-Flow Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Data-Flow-Abstraction"><span class="nav-number">10.1.</span> <span class="nav-text">The Data-Flow Abstraction</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#The-Data-Flow-Analysis-Schema"><span class="nav-number">10.1.1.</span> <span class="nav-text">The Data-Flow Analysis Schema</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Classic-Data-Flow-Problem"><span class="nav-number">10.2.</span> <span class="nav-text">Classic Data-Flow Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Reaching-Definitions"><span class="nav-number">10.2.1.</span> <span class="nav-text">Reaching Definitions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Transfer-Equations"><span class="nav-number">10.2.2.</span> <span class="nav-text">Transfer Equations</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Control-Flow-Equations"><span class="nav-number">10.2.3.</span> <span class="nav-text">Control-Flow Equations</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Gu Tao"
+      src="https://avatars.githubusercontent.com/u/109007949?v=4">
+  <p class="site-author-name" itemprop="name">Gu Tao</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/gutaozi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;gutaozi" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:gutao.official@gmail.com" title="E-Mail → mailto:gutao.official@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://gutaozi.github.io/2026/01/11/CS323_Notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/109007949?v=4">
+      <meta itemprop="name" content="Gu Tao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="GuTao's Nest">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CS323 Compilers Notes | GuTao's Nest">
+      <meta itemprop="description" content="Notes for Compilers">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CS323 Compilers Notes
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2026-01-11 16:44:55" itemprop="dateCreated datePublished" datetime="2026-01-11T16:44:55+08:00">2026-01-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/CS/" itemprop="url" rel="index"><span itemprop="name">CS</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">Notes for Compilers</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Outline"><a href="#Outline" class="headerlink" title="Outline"></a>Outline</h2><ol>
+<li>Introduction</li>
+<li>Lexical Analysis</li>
+<li>Finite Automata</li>
+<li>Syntax Analysis</li>
+<li>Syntax-Directed Translation</li>
+<li>Intermediate-Code Generation</li>
+<li>Run-Time Environments</li>
+<li>Code Generation</li>
+<li>Introduction to Data-Flow Analysis</li>
+</ol>
+<h2 id="Lecture-1-Introduction"><a href="#Lecture-1-Introduction" class="headerlink" title="Lecture 1 - Introduction"></a>Lecture 1 - Introduction</h2><h3 id="The-Evolution-of-Programming-Languages"><a href="#The-Evolution-of-Programming-Languages" class="headerlink" title="The Evolution of Programming Languages"></a>The Evolution of Programming Languages</h3><p><strong>Machine Language</strong></p>
+<ul>
+<li>1946, ENIAC</li>
+<li>01 sequences by setting switches and cables</li>
+</ul>
+<p><strong>Assembly Language</strong></p>
+<ul>
+<li>Early 1950s</li>
+<li>Mnemonic names for machine instructions</li>
+<li>Macro instructions for frequently used machine instructions</li>
+<li>Explicit manipulation of memory addresses and content</li>
+<li>Low-level and machine dependent</li>
+</ul>
+<p><strong>High-Level Languages</strong></p>
+<ul>
+<li>2nd half of the 1950s</li>
+<li>Fortran: for scientific computation, the 1st high-level language</li>
+<li>Cobol: for business data processing</li>
+<li>Lisp: for symbolic computation</li>
+</ul>
+<h3 id="Compiler-Structure"><a href="#Compiler-Structure" class="headerlink" title="Compiler Structure"></a>Compiler Structure</h3><style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-nrix{text-align:center;vertical-align:middle}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <td class="tg-nrix" rowspan="4">Frontend<br>(the analysis part)</th>
+    <td class="tg-nrix">Lexical Analyzer</th>
+  </tr>
+  <tr>
+    <td class="tg-nrix">Syntax Analyzer</th>
+  </tr>
+  <tr>
+    <td class="tg-nrix">Semantic Analyzer</th>
+  </tr>
+  <tr>
+    <td class="tg-nrix">Intermediate Code Generator</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-nrix" rowspan="3">Backend<br>(the synthesis part)</td>
+    <td class="tg-nrix">Machine Independent Code Optimizer</td>
+  </tr>
+  <tr>
+    <td class="tg-nrix">Code Generator</td>
+  </tr>
+  <tr>
+    <td class="tg-nrix">Machine-Dependent Code Optimizer</td>
+  </tr>
+</tbody>
+</table>
+
+<h4 id="Frontend"><a href="#Frontend" class="headerlink" title="Frontend"></a>Frontend</h4><ul>
+<li>Breaks up the source program into tokens</li>
+<li>Imposes a grammatical structure on tokens</li>
+<li>Uses the grammatical structure to create an intermediate representation</li>
+<li>Maintains the symbol table<ul>
+<li>variable name → storage allocated, type, scope</li>
+<li>procedure name → number and types of arguments, way of passing values, return type</li>
+</ul>
+</li>
+</ul>
+<h4 id="Backend"><a href="#Backend" class="headerlink" title="Backend"></a>Backend</h4><ul>
+<li>Constructs target program from IR and the symbol table</li>
+<li>Optimize the code</li>
+</ul>
+<h4 id="Lexical-Analysis"><a href="#Lexical-Analysis" class="headerlink" title="Lexical Analysis"></a>Lexical Analysis</h4><p>Source code → Lexer&#x2F;Tokenizer&#x2F;Scanner → Tokens</p>
+<p>Token: &lt;token-name, attribute-value&gt;</p>
+<p>Lexemes are <strong>instances</strong>, while tokens are <strong>patterns</strong>.</p>
+<h4 id="Syntax-Analysis"><a href="#Syntax-Analysis" class="headerlink" title="Syntax Analysis"></a>Syntax Analysis</h4><p>Tokens → Parser → Syntax Tree</p>
+<p>Interior nodes: operations</p>
+<p>Child nodes: arguments</p>
+<h4 id="Semantic-Analysis"><a href="#Semantic-Analysis" class="headerlink" title="Semantic Analysis"></a>Semantic Analysis</h4><p>Syntax Tree → Syntax Analyzer → Syntax Tree</p>
+<p>Check semantic consistency</p>
+<p>Gather type information for type checking, type converssion, intermediate code generation.</p>
+<h4 id="Intermediate-Code-Generation"><a href="#Intermediate-Code-Generation" class="headerlink" title="Intermediate Code Generation"></a>Intermediate Code Generation</h4><p>Syntax Tree → Intermediate Code Generator → IR(Three Address Code)</p>
+<ul>
+<li>Assembly-like instructions</li>
+<li>Register-like operands</li>
+<li>At most one operator on the rhs</li>
+</ul>
+<h4 id="Machine-Independent-Code-Optimization"><a href="#Machine-Independent-Code-Optimization" class="headerlink" title="Machine-Independent Code Optimization"></a>Machine-Independent Code Optimization</h4><p>IR → Machine-Independent Code Optimizer → IR</p>
+<p>Run faster, less memory consumption, shorter code, less power consumption…</p>
+<h4 id="Code-Generation"><a href="#Code-Generation" class="headerlink" title="Code Generation"></a>Code Generation</h4><p>IR → Code Generator → Target-Machine Code</p>
+<p>Allocate register and memory to hold values</p>
+<h4 id="Compiler-vs-Interpreters"><a href="#Compiler-vs-Interpreters" class="headerlink" title="Compiler vs. Interpreters"></a>Compiler vs. Interpreters</h4><p>Compiler</p>
+<ul>
+<li>High-level language → Machine codes</li>
+<li>Takes more time to analyze inter-statement relationships for optimization</li>
+<li>Executable only successfully compiled</li>
+</ul>
+<p>Interpreter</p>
+<ul>
+<li>Directly executes each statement without compiling into machine code in advance</li>
+<li>Takes less time to analyze the source code, simply parses each statement and executes</li>
+<li>Continue executing until first error met</li>
+</ul>
+<h2 id="Lecture-2-Lexical-Analysis"><a href="#Lecture-2-Lexical-Analysis" class="headerlink" title="Lecture 2 - Lexical Analysis"></a>Lecture 2 - Lexical Analysis</h2><h3 id="The-Role-of-Lexical-Analyzer"><a href="#The-Role-of-Lexical-Analyzer" class="headerlink" title="The Role of Lexical Analyzer"></a>The Role of Lexical Analyzer</h3><ul>
+<li><p>Read the input characters of the source program</p>
+</li>
+<li><p>Group them into lexemes</p>
+</li>
+<li><p>Produce a sequence of tokens</p>
+</li>
+<li><p>Add lexemes into the symbol table when necessary</p>
+</li>
+</ul>
+<img src="https://s2.loli.net/2023/09/18/SGh7Y2mHFJ8bM63.png" alt="image.png" style="zoom:50%;" />
+
+<p><strong>lexeme</strong>: a string of characters that is a lowest-level syntactic unit in programming languages</p>
+<p><strong>token</strong>: a syntactic category representing a class of lexemes. Formally, it is a pair <em>&lt;token name, attribute value&gt;</em></p>
+<ul>
+<li><strong>Token name</strong> (compulsory): an abstract symbol representing the kind of the token</li>
+<li><strong>Attribute value</strong> (optional): points to the symbol table</li>
+</ul>
+<p><strong>pattern</strong>:  a description of the form that the lexemes of the token may take</p>
+<p>e.g.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;CS%d&quot;</span>,course_id);</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Lexeme</th>
+<th><code>printf</code></th>
+<th><code>course_id</code></th>
+<th><code>&quot;CS%d&quot;</code></th>
+<th><code>(</code></th>
+<th>…</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Token</strong></td>
+<td>id</td>
+<td>id</td>
+<td>literal</td>
+<td>left_parenthesis</td>
+<td>…</td>
+</tr>
+</tbody></table>
+<p>An <code>id</code> token is associated with:</p>
+<ol>
+<li>its lexeme</li>
+<li>type</li>
+<li>the declaration location(where first found)</li>
+</ol>
+<blockquote>
+<p>Q: function?</p>
+</blockquote>
+<p>Token attributes are stored in the <strong>symbol table</strong>.</p>
+<p><strong>Lexical error</strong>: none of the patterns for tokens match any prefix of the remaining input.</p>
+<h3 id="Specification-of-Tokens-Regex"><a href="#Specification-of-Tokens-Regex" class="headerlink" title="Specification of  Tokens (Regex)"></a>Specification of  Tokens (Regex)</h3><p><strong>Alphabet</strong>: any <u>finite</u> set of symbols</p>
+<p><strong>String</strong>: (defined over an alphabet) a <u>finite</u> sequence of symbols drawn from an alphabet</p>
+<p><strong>Prefix, Proper Prefix, Suffix, Proper Suffix</strong>: n+1, n-1, n+1, n-1</p>
+<p><strong>Substring, Proper Substring, Subsequences</strong>: n(n+1)&#x2F;2+1, n(n+1)&#x2F;2-1, 2^n</p>
+<p><strong>String Operations</strong></p>
+<ul>
+<li><strong>Concatenation</strong>: $x$&#x3D;butter, $y$&#x3D;fly, $xy$&#x3D;butterfly</li>
+<li><strong>Exponentiation</strong>: $s^0&#x3D;\epsilon, s^1&#x3D;s, s^i&#x3D;s^{i-1}s$</li>
+</ul>
+<p><strong>Language</strong>: any <strong>countable set</strong>$^1$ of strings over some fixed alphabet</p>
+<p>✅The set containing only the empty string ${\epsilon}$ is a language, denoted $\emptyset$.</p>
+<p>✅The set of all grammatically correct English sentences</p>
+<p>✅The set of all syntactically well-formed C programs</p>
+<blockquote>
+<p>$^1$A countable set is a set with the same cardinality (number of elements) as some subset of the set of natural numbers.</p>
+</blockquote>
+<p><strong>Operations on Languages</strong></p>
+<ul>
+<li>Union $L\bigcup M&#x3D;{s|s \text{ is in } L\text{ or }s \text{ is in }M}$</li>
+<li>Concatenation $LM&#x3D;{s t|s \text{ is in } L\text{ and }t \text{ is in }M}$</li>
+<li>Kleene closure $L^\star&#x3D;\bigcup_{i&#x3D;0}^{\infty}L^i$</li>
+<li>Positive closure $L^+&#x3D;\bigcup_{i&#x3D;1}^{\infty}L^i$</li>
+</ul>
+<p><strong>Regex</strong> over an alphabet $\Sigma$</p>
+<ul>
+<li><p><strong>BASIS</strong></p>
+<ul>
+<li>$\epsilon$ is a regex, $L(\epsilon)&#x3D;{\epsilon}$</li>
+<li>If $a$ is a symbol in $\Sigma$, then $a$ is a regex, $L(a)&#x3D;{a}$</li>
+</ul>
+</li>
+<li><p><strong>INDUCTION</strong>: Regex $r$ and $s$ denote the languages $L(r)$ and $L(s)$<br>$$<br>\begin{align*}<br>&amp;(r)|(s) &amp;\rightarrow &amp;\quad L(r)\bigcup L(s)\<br>&amp;(r)(s) &amp;\rightarrow &amp;\quad L(r)L(s)\<br>&amp;(r)^\star &amp;\rightarrow &amp;\quad (L(r))^\star\<br>&amp;(r) &amp;\rightarrow &amp;\quad L(r)<br>\end{align*}<br>$$</p>
+</li>
+</ul>
+<p><strong>Precedence</strong>: closure $^\star$ &gt; concatenation &gt; union $|$</p>
+<p><strong>Associativity</strong>: left associative</p>
+<table>
+<thead>
+<tr>
+<th>LAW</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$r\vert s&#x3D;s\vert r$</td>
+<td>$\vert $ is commutative</td>
+</tr>
+<tr>
+<td>$r\vert (s\vert t)&#x3D;(r\vert s)\vert t$</td>
+<td>$\vert $ is associative</td>
+</tr>
+<tr>
+<td>$r(st)&#x3D;(rs)t$</td>
+<td>Concatenation is associative</td>
+</tr>
+<tr>
+<td>$r(s\vert t)&#x3D;rs\vert rt;\ (s\vert t)r&#x3D;sr\vert tr$</td>
+<td>Concatenation distributes over $\vert $</td>
+</tr>
+<tr>
+<td>$r&#x3D;\epsilon r&#x3D;r\epsilon$</td>
+<td>$\epsilon$ is the identity for concatenation</td>
+</tr>
+<tr>
+<td>$r^\star&#x3D;(r\vert \epsilon)^\star$</td>
+<td>$\epsilon$ is guaranteed in a closure</td>
+</tr>
+<tr>
+<td>$r^\star&#x3D;r^{\star\star}$</td>
+<td>$^\star$ is idempotent</td>
+</tr>
+</tbody></table>
+<p>e.g. Regex for C identifiers</p>
+<p>$id\rightarrow letter_(letter_|digit)^\star$</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(A|B|...|Z|a|b|...|z|_)((A|B|...|Z|a|b|...|z|_)|(0|1|</span><br><span class="line">...|9))*</span><br></pre></td></tr></table></figure>
+
+<p><strong>Regular Definitions</strong>: For notational convenience, we can give names to certain regexes and use those names in subsequent expressions.</p>
+<p><strong>Notational extensions</strong></p>
+<ul>
+<li>$r^+&#x3D;rr^\star,\ r^\star&#x3D;r^+|\epsilon$</li>
+<li>$r?&#x3D;r|\epsilon$</li>
+<li>$[a_1a_2…a_n]&#x3D;a_1|a_2|…|a_n$, $[a-e]&#x3D;a|b|c|d|e$</li>
+</ul>
+<h3 id="Recognition-of-Tokens-Transition-Diagrams"><a href="#Recognition-of-Tokens-Transition-Diagrams" class="headerlink" title="Recognition of Tokens (Transition Diagrams)"></a>Recognition of Tokens (Transition Diagrams)</h3><p><strong>whitespace token</strong>: ws→ (blank | tab | newline)$^+$</p>
+<p>The lexical analyzer restarts from the next character when recognizing a whitespace token.</p>
+<p><strong>Transition Diagrams</strong></p>
+<p><img src="https://s2.loli.net/2023/09/18/5u4hoNQi9xWJHtz.png" alt="image.png"></p>
+<p><strong>States</strong></p>
+<ul>
+<li>conditions that could occur during the process of scanning</li>
+<li>start state: indicated by starting edge</li>
+<li>accepting states(final): double circles</li>
+</ul>
+<p><strong>The Retract Action</strong></p>
+<p>Retract the <code>forward</code> pointer when falling into $\star$ states. </p>
+<p><strong>Edges</strong>: from one state to another</p>
+<p><strong>Handling Reserved Words</strong></p>
+<blockquote>
+<p>Problem: the transition diagram that searches for identifiers can also recognize reserved words</p>
+</blockquote>
+<ul>
+<li><p>Pre-install strategy</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span>(<span class="built_in">getToken</span>(),<span class="built_in">installID</span>())</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Multi-state transition diagrams strategy</p>
+<p>Create a separate transition diagram with a <u>high priority</u> for each keyword</p>
+</li>
+</ul>
+<p><strong>Building the Entire Lexical Analyzer</strong></p>
+<ul>
+<li>Try the transition diagram for each type of token sequentially</li>
+<li>Run transition diagrams in parallel</li>
+<li>Combining all transition diagrams into one</li>
+</ul>
+<h2 id="Lecture-3-Finite-Automata"><a href="#Lecture-3-Finite-Automata" class="headerlink" title="Lecture 3 - Finite Automata"></a>Lecture 3 - Finite Automata</h2><h3 id="Automata"><a href="#Automata" class="headerlink" title="Automata"></a>Automata</h3><p>Finite automata are graphs simply saying “yes” or “no” about each possible input string(pattern match).</p>
+<ul>
+<li><p>Nondeterministic finite automata</p>
+<blockquote>
+<p>A symbol can label several edges out of the same state (allowing multiple target states), and the empty string ! is a possible label.</p>
+</blockquote>
+</li>
+<li><p>Deterministic finite automata</p>
+<blockquote>
+<p>For each state and for each symbol in the input alphabet, there is exactly one edge with that symbol leaving that state.</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>Nondeterministic Finite Automata</strong>: 5-tuple</p>
+<ol>
+<li>A finite set of states $S$</li>
+<li>A set of input symbols $\Sigma$, the <strong>input alphabet</strong>. We assume that the empty string $\epsilon$ is never a member of $\Sigma$ </li>
+<li>A <strong>transition function</strong> that gives, for each state, and for each symbol in $\Sigma\cup{\epsilon}$ <u>a set of next states</u> </li>
+<li>A <strong>start state</strong> (or initial state) $s_0$ from $S$ </li>
+<li>A set of <strong>accepting states</strong> (or final states) $F$, a subset of $S$</li>
+</ol>
+<p><strong>Transition Table</strong></p>
+<img src="https://s2.loli.net/2023/09/25/3sFkCmprPOjaqN7.png" alt="image.png" style="zoom:50%;" />
+
+<p><strong>Acceptance of Input Strings</strong></p>
+<p>An NFA accepts an input string $x$ <strong>if and only if</strong>:</p>
+<p>There is a path in the transition graph from the start state to one accepting state, such that the symbols along the path form $x$ ($\epsilon$ labels are ignored).</p>
+<p>The language defined or accepted by an NFA: </p>
+<p>The set of strings labelling some path from the start state to an accepting state.</p>
+<p><strong>Deterministic Finite Automata</strong>: special NFA s.t.</p>
+<ul>
+<li>There are no moves on input $\epsilon$</li>
+<li>For each state $s$ and input symbol $a$, there is exactly one edge out of $s$ labeled $a$ (i.e., exactly one target state)</li>
+</ul>
+<h3 id="From-Regex-to-Automata"><a href="#From-Regex-to-Automata" class="headerlink" title="From Regex to Automata"></a>From Regex to Automata</h3><p>Regex→NFA→DFA</p>
+<p>Algorithms: Thompson’s construction + subset construction</p>
+<h4 id="Subset-construction"><a href="#Subset-construction" class="headerlink" title="Subset construction"></a>Subset construction</h4><p>Each state of the constructed DFA corresponds to a set of NFA states</p>
+<p>The algorithm simulates “in parallel” all possible moves an NFA can make on a given input string to map a set of NFA states to a DFA state.</p>
+<p><strong>Operations</strong></p>
+<ul>
+<li><p>$\epsilon$-closure($s$)</p>
+<p>Set of NFA states reachable from NFA state s on $\epsilon$- transitions alone.</p>
+<p>(Computed by DFS&#x2F;BFS)</p>
+</li>
+<li><p>$\epsilon$-closure($T$)</p>
+<p>Set of NFA states reachable from some NFA state $s$ in set $T$ on $\epsilon$-transitions alone</p>
+</li>
+<li><p>move($T, a$)</p>
+<p>Set of NFA states to which there is a transition on input symbol $a$ from some state $s$ in $T$ (i.e., the target states of those states in $T$ when seeing $a$)</p>
+</li>
+</ul>
+<p><strong>Dstates &amp; Dtran</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">while(there is an unmarked state T in Dstates)</span><br><span class="line">&#123;</span><br><span class="line">	mark T;</span><br><span class="line">	for(each input symbol a)</span><br><span class="line">	&#123;</span><br><span class="line">		U=epsilon-closure(move(T,a));</span><br><span class="line">		if(U is not in Dstates)</span><br><span class="line">		&#123;</span><br><span class="line">			add U as an unmarked state to Dstates;</span><br><span class="line">		&#125;</span><br><span class="line">		Dtran[T,a]=U;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Thompson’s-Construction"><a href="#Thompson’s-Construction" class="headerlink" title="Thompson’s Construction"></a>Thompson’s Construction</h4><p>The algorithm works recursively by splitting a regex into subexpressions, from which the NFA will be constructed using the following rules:</p>
+<ul>
+<li><p>Two basis rules: handle subexpressions with no operators</p>
+<img src="https://s2.loli.net/2023/09/25/pMlOHkGaq45ifB2.png" alt="image.png" style="zoom: 33%;" />
+</li>
+<li><p>Three inductive rules: construct larger NFA’s from the smaller NFA’s for subexpressions</p>
+<ul>
+<li><p>Union</p>
+<img src="https://s2.loli.net/2023/09/25/dGVNmClnbRIA8PJ.png" alt="image.png" style="zoom: 33%;" />
+</li>
+<li><p>Concatenation</p>
+<img src="https://s2.loli.net/2023/09/25/aLXCdiM1eEKwOZ9.png" alt="image.png" style="zoom:33%;" />
+</li>
+<li><p>Kleene Closure</p>
+<img src="https://s2.loli.net/2023/09/25/nDjpL8lB63obcd7.png" alt="image.png" style="zoom:33%;" /></li>
+</ul>
+</li>
+</ul>
+<h3 id="DFA’s-for-Lexical-Analyzers"><a href="#DFA’s-for-Lexical-Analyzers" class="headerlink" title="DFA’s for Lexical Analyzers"></a>DFA’s for Lexical Analyzers</h3><p><strong>Combining NFA’s</strong></p>
+<ul>
+<li><p>Why?</p>
+<p>A single automaton to recognize lexemes matching any pattern (in the lex program)</p>
+</li>
+<li><p>How?</p>
+<p>Introduce a new start state with $\epsilon$-transitions to each of the start states of the NFA’s for pattern $p_i$</p>
+</li>
+</ul>
+<p>The languages of big NFA is the <strong>union</strong> of the languages of small NFA’s.</p>
+<p>Different <strong>accepting states</strong> correspond to different <strong>patterns</strong>.</p>
+<p><strong>DFA’s for Lexical Analyzers</strong></p>
+<ul>
+<li>Convert the NFA for all the patterns into an equivalent DFA</li>
+<li>An accepting state of the DFA corresponds to a subset of the NFA states, in which at least one is an accepting NFA state<ul>
+<li>If there are multiple accepting NFA states, this means that <strong>conflicts</strong> arise (the prefix of the input string matches multiple patterns)</li>
+<li>Solution for conflicts: pattern priority</li>
+</ul>
+</li>
+</ul>
+<h2 id="Lecture-4-Syntax-Analysis"><a href="#Lecture-4-Syntax-Analysis" class="headerlink" title="Lecture 4 - Syntax Analysis"></a>Lecture 4 - Syntax Analysis</h2><h3 id="Introduction-Syntax-and-Parsers"><a href="#Introduction-Syntax-and-Parsers" class="headerlink" title="Introduction: Syntax and Parsers"></a>Introduction: Syntax and Parsers</h3><h4 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h4><p>The syntax can be specified by <strong>context-free grammars</strong></p>
+<ul>
+<li>Grammar gives syntactic specification of a programming language, defining its structure.</li>
+<li>For certain grammars, we can automatically construct an efficient parser</li>
+<li>A good grammar helps <strong>translate source programs</strong> into correct object code and <strong>detect errors</strong>.</li>
+</ul>
+<h4 id="Parsers’-Roles"><a href="#Parsers’-Roles" class="headerlink" title="Parsers’ Roles"></a>Parsers’ Roles</h4><ul>
+<li>Obtain a string of tokens from the lexical analyzer</li>
+<li>Verify that the string of token names can be generated by the grammar for the source language</li>
+</ul>
+<h4 id="Classification-of-Parsers"><a href="#Classification-of-Parsers" class="headerlink" title="Classification of Parsers"></a>Classification of Parsers</h4><ul>
+<li>Universal parsers<ul>
+<li>Some methods (e.g., Earley’s algorithm) can parse any grammar</li>
+<li>too inefficient to be used in practice</li>
+</ul>
+</li>
+<li>Top-down parsers<ul>
+<li>Construct parse trees from the top (root) to the bottom (leaves)</li>
+</ul>
+</li>
+<li>Bottom-up parsers<ul>
+<li>Construct parse trees from the bottom (leaves) to the top (root)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Context-Free-Grammars"><a href="#Context-Free-Grammars" class="headerlink" title="Context-Free Grammars"></a>Context-Free Grammars</h3><h4 id="Formal-definition-of-CFG"><a href="#Formal-definition-of-CFG" class="headerlink" title="Formal definition of CFG"></a>Formal definition of CFG</h4><p>4 components of a CFG:</p>
+<ul>
+<li><strong>Terminals</strong>: Basic symbols token names</li>
+<li><strong>Nonterminals</strong>: Syntactic variables that denote sets of strings</li>
+<li><strong>Start symbol(nonterminal)</strong>: The set of strings denoted by the start symbol is the language generated by the CFG</li>
+<li><strong>Productions</strong>: Specify how the terminals and nonterminals can be combined to form strings<ul>
+<li>Format: $\text{head}\rightarrow\text{body}$</li>
+<li>head must be a nonterminal; body consists of zero or more terminals&#x2F;nonterminals</li>
+</ul>
+</li>
+</ul>
+<h4 id="Derivation-and-parse-tree"><a href="#Derivation-and-parse-tree" class="headerlink" title="Derivation and parse tree"></a>Derivation and parse tree</h4><p><strong>Derivation</strong>: Starting with the start symbol, nonterminals are rewritten using productions until only terminals remain.</p>
+<p><strong>Examples.</strong></p>
+<p>CFG: $E\rightarrow -E\ \vert\ E+E\ \vert\ E\times E\ \vert\ (E)\ \vert\ \ \textbf{id}$</p>
+<p><strong>Derivation Notations</strong></p>
+<ul>
+<li>$\Rightarrow$ means “derives in one step”</li>
+<li>$\mathop{\Rightarrow}\limits^{\star}$ means “derives in zero or more steps”</li>
+<li>$\mathop{\Rightarrow}\limits^{+}$ means “derives in one or more steps”</li>
+</ul>
+<p><strong>Terminologies</strong></p>
+<ul>
+<li>For the start symbol $S$ of a grammar $G$, $\alpha$ is a <strong>sentential form</strong> of $G$ if $S\mathop{\Rightarrow}\limits^{\star}\alpha$.</li>
+<li>A sentential form without nonterminals is a <strong>sentence</strong>.</li>
+<li>The <strong>language</strong> generated by a grammar is its set of <strong>sentences</strong>.</li>
+</ul>
+<p><strong>Leftmost&#x2F;Rightmost Derivations</strong></p>
+<p>The leftmost&#x2F;rightmost nonterminal in each sentential form is always chosen to be replaced.</p>
+<p><strong>Parse Trees</strong></p>
+<ul>
+<li>Root node: start symbol</li>
+<li>Leaf node: terminal symbol</li>
+<li>Interior node: nonterminal symbol, represents the application of a production</li>
+</ul>
+<p>The leaves, from left to right, constitute a sentential form of the grammar, which is called the <strong>yield&#x2F;frontier</strong> of the tree.</p>
+<p>Many-to-one: derivations→parse trees</p>
+<p>One-to-one: leftmost&#x2F;rightmost derivations→parse trees</p>
+<h4 id="Ambiguity"><a href="#Ambiguity" class="headerlink" title="Ambiguity"></a>Ambiguity</h4><p>Given a grammar, if there are <strong>more than one parse tree for some sentence</strong>, it is ambiguous.</p>
+<p>The grammar of a programming language needs to be unambiguous. Otherwise, there will be multiple ways to interpret a program</p>
+<p>In some cases, it is convenient to use carefully chosen ambiguous grammars, together with disambiguating rules to discard undesirable parse trees</p>
+<h4 id="CFG-vs-regexp"><a href="#CFG-vs-regexp" class="headerlink" title="CFG vs. regexp"></a>CFG vs. regexp</h4><p>CFGs are more expressive than regular expressions.</p>
+<ol>
+<li>$\forall L$ expressible by  a regex can also be expressed by a grammar.</li>
+<li>$\exists L$ expressible by  a grammar can not be expressed by any regex.</li>
+</ol>
+<p><strong>Construct CFG from a Regex</strong></p>
+<ul>
+<li>State of NFA → nonterminal symbol</li>
+<li>State transition on input $a$ → production $A_i\rightarrow a A_j$</li>
+<li>State transition on input $\epsilon$ → production $A_i\rightarrow A_j$</li>
+<li>Accepting state → $A_i\rightarrow \epsilon$</li>
+<li>Start state → start symbol</li>
+</ul>
+<p><strong>A Context-free Language Fails Regex</strong><br>$$<br>L&#x3D;{a^nb^n\vert n&gt;0}<br>$$<br>CFG: $S\rightarrow aSb\vert ab$</p>
+<p>$L$  cannot be described by regular expressions. No DFA accepts $L$.</p>
+<p><strong>Proof by Contradiction</strong></p>
+<ul>
+<li>Suppose there is a DFA $D$ with $k$ states and accepts $L$.</li>
+<li>For a string $a^{k+1}b^{k+1}$ of $L$, when processing $a^{k+1}$, $D$ must enter a state $s$ more than once.</li>
+<li>Assume that $D$ enters state $s$ after reading the $i^\text{th}$ and $j^\text{th}$ $a$ ($i\ne j, i\le k+1,j\le k+1$).</li>
+<li>$D$ also accepts $a^jb^j$, there exists a path labeled $b^j$ from $s$ to an accepting state.</li>
+<li>The path labeled $a^i$ reaches $s$, then reaches an accepting state along path labeled $b^j$, so $D$ accepts $a^ib^j$. Contradiction.</li>
+</ul>
+<h3 id="Overview-of-Parsing-Techniques"><a href="#Overview-of-Parsing-Techniques" class="headerlink" title="Overview of Parsing Techniques"></a>Overview of Parsing Techniques</h3><p>Parsing: whether the string of token names can be generated by the grammar.</p>
+<p><strong>Top-Down Parsing</strong></p>
+<p>Constructing a parse tree for the input string, starting from the root and creating the nodes of the parse tree in preorder (depth-first).</p>
+<ol>
+<li><strong>Predict</strong>: At each step of parsing, determine the production to be applied for the leftmost nonterminal.</li>
+<li><strong>Match</strong>: Match the terminals in the chosen production’s body with the input string.</li>
+</ol>
+<ul>
+<li>Equivalent to finding a leftmost derivation.</li>
+<li>At each step, the frontier of the tree is a left-sentential form.</li>
+</ul>
+<blockquote>
+<p>Key decision: Which production to apply at each step?</p>
+</blockquote>
+<p><strong>Bottom-Up Parsing</strong></p>
+<p>Constructing a parse tree for an input string beginning at the leaves (terminals) and working up towards the root (start symbol of the grammar)</p>
+<ol>
+<li><strong>Shift</strong>: Move an input symbol onto the stack</li>
+<li><strong>Reduce</strong>: Replace a string at the stack top with a nonterminal that can produce the string (the reverse of a rewrite step in a derivation)</li>
+</ol>
+<ul>
+<li>Equivalent to finding a rightmost derivation.</li>
+<li>At each step, stack + remaining input is a right-sentential form.</li>
+</ul>
+<blockquote>
+<p>Key decision: When to shift&#x2F;reduce? Which production to apply when reducing?</p>
+</blockquote>
+<h3 id="Top-Down-Parsing"><a href="#Top-Down-Parsing" class="headerlink" title="Top-Down Parsing"></a>Top-Down Parsing</h3><h4 id="Recursive-Descent-Parsing"><a href="#Recursive-Descent-Parsing" class="headerlink" title="Recursive-Descent Parsing"></a>Recursive-Descent Parsing</h4><p>One procedure for each nonterminal, handling a substring of the input.</p>
+<p><strong>Naive procedure</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">A</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Choose an A-production, A → X[<span class="number">1</span>-k];</span><br><span class="line">    <span class="keyword">for</span> i = <span class="number">1</span> to k</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(X[i] is a nonterminal)</span><br><span class="line">        &#123;</span><br><span class="line">            call procedure X[i]();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(X[i] equals the current input symbol a)</span><br><span class="line">        &#123;</span><br><span class="line">            advance the input too the next symbol;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">/* Failed to match using A-production A→X[1-k] */</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Backtracking</strong></p>
+<p>General recursive-descent parsing may require repeated scans over the input (backtracking).</p>
+<ul>
+<li>Try each possible production in some order.</li>
+<li>When failure occurs, return, reset the input pointer and try another A-production.</li>
+</ul>
+<h4 id="Looking-Ahead"><a href="#Looking-Ahead" class="headerlink" title="Looking Ahead"></a><strong>Looking Ahead</strong></h4><p>Left recursion in a CFG traps the recursive-descent parser into an infinite loop.</p>
+<p>Looking ahead, checking the next character avoids bad choices.</p>
+<p><strong>Computing $\text{FIRST}(X)$</strong></p>
+<p>$\text{FIRST}(X)$ denotes the set of beginning terminals of strings derived from $X$.</p>
+<ul>
+<li>If $X$ is a terminal, $\text{FIRST}(X)&#x3D;{X}$</li>
+<li>If $X$ is a nonterminal and $X\rightarrow \epsilon$, then add $\epsilon$ to $\text{FIRST}(X)$.</li>
+<li>If $X$ is a nonterminal and $X\rightarrow Y_1Y_2\cdots Y_k\ \ (k\ge1)$ is a production<ul>
+<li>If for some $i$, $a\in \text{FIRST}(Y_i)$ and $\epsilon \in \text{FIRST}(Y_1),\cdots,\text{FIRST}(Y_{i-1})$, then add $a$ to $\text{FIRST}(X)$.</li>
+<li>If $\epsilon\in \text{FIRST}(Y_1),\cdots,\text{FIRST}(Y_k)$, then add $\epsilon$ to $\text{FIRST}(X)$.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Computing $\text{FIRST}(X_1X_2\cdots X_n)$</strong></p>
+<ul>
+<li>Add all non-$\epsilon$ symbols of $\text{FIRST}(X_1)$ to $\text{FIRST}(X_1X_2\cdots X_n)$.</li>
+<li>If for some $i$, $\epsilon\in \text{FIRST}(X_1),\cdots,\text{FIRST}(X_{i-1})$, then add  all non-$\epsilon$ symbols of $\text{FIRST}(X_i)$ to $\text{FIRST}(X_1X_2\cdots X_n)$.</li>
+<li>If $\forall i,\ \epsilon\in \text{FIRST}(X_i)$, then add $\epsilon$ to $\text{FIRST}(X_1X_2\cdots X_n)$.</li>
+</ul>
+<p><strong>Computing $\text{FOLLOW}$</strong></p>
+<p>Whether to choose: $A\rightarrow \alpha,\ \epsilon\in\text{FIRST}(\alpha)$?</p>
+<ul>
+<li>For start symbol $S$, add right endmarker $$$ to $\text{FOLLOW}(S)$.</li>
+<li>Apply the rules below, until all $\text{FOLLOW}$ sets do not change:<ul>
+<li>For production $A\rightarrow \alpha B\beta$, add $\text{FIRST}(\beta)&#x2F;\epsilon$ to $\text{FOLLOW}(B)$</li>
+<li>For production $A\rightarrow \alpha B$ (or $\epsilon\in \text{FIRST}(\beta)$), then add $\text{FOLLOW}(A)$ to $\text{FOLLOW}(B)$.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>By definition, $\epsilon$ will not appear in any $\text{FOLLOW}$ set.</p>
+</blockquote>
+<p>If the next input symbol is in $\text{FIRST(body)}$, the production $\text{head}\rightarrow \text{body}$ may be a good choice.</p>
+<p>If the next input symbol is in $\text{FOLLOW(head)}$, the production $\text{head}\rightarrow\epsilon$ may be a good choice.</p>
+<h4 id="LL-1-Grammars"><a href="#LL-1-Grammars" class="headerlink" title="LL(1) Grammars"></a><strong>LL(1) Grammars</strong></h4><p>No backtracking recursive-descent parser can be constructed for LL(1)</p>
+<ul>
+<li>scanning the input from left to right.</li>
+<li>producing a leftmost derivation (top-down parsing).</li>
+<li>using one input symbol of lookahead each step to make parsing decision.</li>
+</ul>
+<p>A grammar $G$ is LL(1) IFF for any two distinct productions $A\rightarrow \alpha\vert\beta$:</p>
+<ul>
+<li>$\text{FIRST}(\alpha)\bigcap\text{FIRST}(\beta)&#x3D;\emptyset$</li>
+<li>If $\epsilon\in\text{FIRST}(\beta)$, then $\text{FIRST}(\alpha)\bigcap\text{FOLLOW}(A)&#x3D;\emptyset$ and vice versa.</li>
+</ul>
+<blockquote>
+<p>There is a unique choice of production at each step by looking ahead.</p>
+</blockquote>
+<h4 id="Parsing-Table"><a href="#Parsing-Table" class="headerlink" title="Parsing Table"></a>Parsing Table</h4><p>For a nonterminal $A$ and a symbol $a$ on its input stream, determines which production the parser should choose.</p>
+<p>The parsing table of an LL(1) parser has no entries with multiple productions.</p>
+<p>For each production $A\rightarrow\alpha$ of grammar $G$, do the following:</p>
+<ol>
+<li>For each terminal $a$ in $\text{FIRST}(\alpha)$, add $A\rightarrow\alpha$ to $M[A,a]$</li>
+<li>If $\epsilon\in\text{FIRST}(\alpha)$, then for each terminal $b$ (including the right endmarker $) in $\text{FOLLOW}(A)$, add $A\rightarrow\alpha$ to $M[A,b]$</li>
+<li>Set all empty entries in the table to <strong>error</strong>.</li>
+</ol>
+<h4 id="Non-Recursive-Predictive-Parsing"><a href="#Non-Recursive-Predictive-Parsing" class="headerlink" title="Non-Recursive Predictive Parsing"></a>Non-Recursive Predictive Parsing</h4><p>A non-recursive predictive parser can be built by explicitly maintaining a stack.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">let a be the first symbol of w;</span><br><span class="line">let X be the top stack symbol;</span><br><span class="line"><span class="keyword">while</span> ( X ≠ $ )</span><br><span class="line">&#123; <span class="comment">/* stack is not empty */</span></span><br><span class="line">    <span class="keyword">if</span> ( X = a ) pop the stack <span class="keyword">and</span> let a be the next symbol of w;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> ( X is a terminal) <span class="built_in">error</span>(); <span class="comment">/* X can only match a, cannot be another terminal */</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> ( M[X, a] is an error entry ) <span class="built_in">error</span>();</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> ( M[X, a] = X -&gt; Y[<span class="number">1.</span>..k])</span><br><span class="line">    &#123;</span><br><span class="line">        output the production X -&gt; Y[<span class="number">1.</span>..k];</span><br><span class="line">        pop the stack;</span><br><span class="line">        push Y[k..<span class="number">.1</span>] onto the stack, with Y[<span class="number">1</span>] on top; <span class="comment">/* order is critical */</span></span><br><span class="line">    &#125;</span><br><span class="line">    let X be the top stack symbol;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Bottom-Up-Parsing"><a href="#Bottom-Up-Parsing" class="headerlink" title="Bottom-Up Parsing"></a>Bottom-Up Parsing</h3><h4 id="Simple-LR-SLR"><a href="#Simple-LR-SLR" class="headerlink" title="Simple LR(SLR)"></a>Simple LR(SLR)</h4><h5 id="Shift-Reduce-Parsing"><a href="#Shift-Reduce-Parsing" class="headerlink" title="Shift-Reduce Parsing"></a>Shift-Reduce Parsing</h5><ol>
+<li>Shift zero or more input symbols onto the stack, until it is ready to reduce a string $\beta$ on top of the stack</li>
+<li>Reduce $\beta$ to the head of the appropriate production</li>
+</ol>
+<h5 id="LR-k-Parsers"><a href="#LR-k-Parsers" class="headerlink" title="LR(k) Parsers"></a>LR(k) Parsers</h5><ul>
+<li>left-to-right scan of the input</li>
+<li>construct a rightmost derivation in reverse</li>
+<li>use $k$ input symbols of lookahead in making parsing decisions</li>
+</ul>
+<p>An LR parser makes shift-reduce decisions by maintaining <strong>states</strong> to keep track of what have been seen during parsing.</p>
+<h5 id="LR-0-Items"><a href="#LR-0-Items" class="headerlink" title="LR(0) Items"></a>LR(0) Items</h5><p>An <strong>item</strong> is a production with a dot, indicating how much we have seen at a given time point in the parsing process.</p>
+<p>The production $A\rightarrow \epsilon$ generates only $A\rightarrow \cdot$</p>
+<p><strong>States</strong>: sets of LR(0) items</p>
+<p><strong>Canonical LR(0) collection</strong>:</p>
+<p>One collection of states, provides <u>the basis for constructing a DFA</u> to make parsing decisions.</p>
+<h5 id="Augmented-Grammar"><a href="#Augmented-Grammar" class="headerlink" title="Augmented Grammar"></a>Augmented Grammar</h5><p>Add a new production $S^\prime\rightarrow S$ to introduce a new start symbol $S^\prime$.<br>$$<br>L(G)&#x3D;L(G^\prime)<br>$$<br>Acceptance occurs IFF the parser is about to reduce by $S^\prime\rightarrow S$.</p>
+<h5 id="Closure-of-Item-Sets"><a href="#Closure-of-Item-Sets" class="headerlink" title="Closure of Item Sets"></a>Closure of Item Sets</h5><p>Grammar $G$, set of items $I$</p>
+<ol>
+<li>Add every item in $I$ to $\text{CLOSURE} (I)$</li>
+<li>If $A\rightarrow \alpha\cdot B\beta$ is in $\text{CLOSURE} (I)$ and $B\rightarrow \gamma$ is a production, then add the item $B\rightarrow\cdot \gamma$ to $\text{CLOSURE} (I)$. Repeat until no more new items can be added to $\text{CLOSURE} (I)$.</li>
+</ol>
+<h5 id="The-Function-GOTO"><a href="#The-Function-GOTO" class="headerlink" title="The Function GOTO"></a>The Function GOTO</h5><p>$\text{GOTO}(I,X)$ is defined to be the closure of the set of all items $[A\rightarrow \alpha X\cdot\beta]$, where $[A\rightarrow \alpha\cdot X\beta]$ is in $I$.</p>
+<img src="https://s2.loli.net/2023/10/30/oQ9C7ZeFxlgnGVz.png" alt="image.png" style="zoom:50%;" />
+
+<h5 id="LR-0-Automaton"><a href="#LR-0-Automaton" class="headerlink" title="LR(0) Automaton"></a>LR(0) Automaton</h5><ul>
+<li>states: item sets in canonical LR(0) collection</li>
+<li>transitions: GOTO</li>
+<li>start state: $\text{CLOSURE}({[S’\rightarrow \cdot S]})$</li>
+</ul>
+<p><strong>Shift</strong> when the state has a transition on the incoming symbol.</p>
+<p><strong>Reduce</strong> when there is no further move, push a new state into the stack corresponding to the reduced symbol.</p>
+<h5 id="LR-Parser-Structure"><a href="#LR-Parser-Structure" class="headerlink" title="LR Parser Structure"></a>LR Parser Structure</h5><ul>
+<li>input, output, stack, driver program, parsing table(ACTION+GOTO)</li>
+<li>only the parsing table differs (depending on the parsing algorithm)</li>
+<li>stack-top state + next input terminal → next action</li>
+</ul>
+<h5 id="ACTION-i-a"><a href="#ACTION-i-a" class="headerlink" title="ACTION$[i,a]$"></a>ACTION$[i,a]$</h5><ul>
+<li>state $i$, terminal $a$</li>
+<li>Shift $j$: shift input $a$ to the stack, use state $j$ to represent $a$.</li>
+<li>Reduce $A\rightarrow \beta$: reduce stack-top $\beta$ to non-terminal $A$.</li>
+<li>Accept: accept the input, finish parsing.</li>
+<li>Error: syntax error detected.</li>
+</ul>
+<h5 id="LR-Parser-Configurations"><a href="#LR-Parser-Configurations" class="headerlink" title="LR Parser Configurations"></a>LR Parser Configurations</h5><p>Configuration: &lt;Stack contents, Remaining input&gt;</p>
+<p>By construction, each state (except $s_0$) in an LR parser corresponds to a set of items and a grammar symbol (the symbol that leads to the state transition)</p>
+<p>Suppose $X_i$ is the grammar symbol for state $s_i$, then $X_0X_1\cdots X_ma_ia_{i+1}\cdots a_n$ is a right-sentential form (assume no errors).</p>
+<p>ACTION$[s_m,a_i]$</p>
+<ul>
+<li>Shift $s$: $(s_0s_1\cdots s_ms,a_{i+1}\cdots a_n$)$</li>
+<li>Reduce $A\rightarrow \beta$: $(s_0s_1\cdots s_{m-r}s,a_ia_{i+1}\cdots a_n$)$, where $r$ is the length of $\beta$, and $s&#x3D;\text{GOTO}(s_{m-r},A)$</li>
+</ul>
+<h5 id="Constructing-SLR-Parsing-Tables"><a href="#Constructing-SLR-Parsing-Tables" class="headerlink" title="Constructing SLR-Parsing Tables"></a>Constructing SLR-Parsing Tables</h5><ol>
+<li><p>Construct canonical LR(0) collection ${I_0,\cdots,I_n}$ for the augmented grammar $G^\prime$.</p>
+</li>
+<li><p>State $i$ is constructed from $I_i$. ACTION can be determined as follows:</p>
+<img src="https://s2.loli.net/2023/10/30/Hzdupvr4iQgjnZ7.png" alt="image.png" style="zoom:50%;" />
+</li>
+<li><p>The GOTO transitions for state $i$ are constructed for all nonterminals $A$ using the rule: If $\text{GOTO}(I_i,A)&#x3D;I_j$, then $\text{GOTO}(i,A)&#x3D;j$.</p>
+</li>
+<li><p>All entries not defined in steps 2 and 3 are set to “error”</p>
+</li>
+<li><p>Initial state is the one constructed from the item set containing $[S^\prime\rightarrow\cdot S]$</p>
+</li>
+</ol>
+<p>If there is no conflict (i.e., multiple actions for a table entry), the grammar is <strong>SLR(1)</strong>.</p>
+<h5 id="Weakness"><a href="#Weakness" class="headerlink" title="Weakness"></a>Weakness</h5><p>Stack-top reduction: $\beta\alpha\Rightarrow\beta A$ when $a\in\text{FOLLOW}(A)$, but $$a\not\in\text{FOLLOW}(\beta A)$$.</p>
+<h4 id="Canonical-LR-CLR"><a href="#Canonical-LR-CLR" class="headerlink" title="Canonical LR(CLR)"></a>Canonical LR(CLR)</h4><h5 id="LR-1-Item-A-rightarrow-alpha-cdot-beta-a"><a href="#LR-1-Item-A-rightarrow-alpha-cdot-beta-a" class="headerlink" title="LR(1) Item: $[A\rightarrow \alpha\cdot\beta,a]$"></a>LR(1) Item: $[A\rightarrow \alpha\cdot\beta,a]$</h5><ul>
+<li>$A\rightarrow \alpha\beta$ is a production, $a$ is a terminal or $$$.</li>
+<li>1: length of the lookahead</li>
+<li>The lookahead symbol only works if $\beta&#x3D;\epsilon$.</li>
+</ul>
+<p>$[A\rightarrow\alpha\cdot,a]$ calls for a reduction by $A\rightarrow\alpha$ only if the next input symbol is $a$.</p>
+<p>When calculating CLOSURE, generate a new item $[B\rightarrow \cdot\gamma,b]$ from $[A\rightarrow\alpha\cdot B\beta,a]$ if $b\in\text{FIRST}(\beta a)$.</p>
+<p>&lt;$\cdots\alpha\gamma,b\cdots$&gt; → &lt;$\cdots\alpha B,b\cdots$&gt; → &lt;$\cdots\alpha Bb,\cdots$&gt;</p>
+<blockquote>
+<p>$\beta&#x3D;\epsilon, b&#x3D;a ;\beta\not&#x3D; \epsilon, b\in \text{FIRST}(\beta)\equiv b\in\text{FIRST}(\beta a)$</p>
+</blockquote>
+<h4 id="Look-ahead-LR-LALR"><a href="#Look-ahead-LR-LALR" class="headerlink" title="Look-ahead LR (LALR)"></a>Look-ahead LR (LALR)</h4><p>Merge sets of LR(1) items with the same <strong>core</strong>.</p>
+<p>The core of an LR(1) item set is the set of the first components, a set of LR(0) items.</p>
+<p>Merging states may cause reduce&#x2F;reduce conflicts:</p>
+<img src="https://s2.loli.net/2023/11/06/uoc1pBe6k59AlbW.png" alt="image.png" style="zoom:50%;" />
+
+<p>Merging states in LR(1) parsing table; If there is no reduce-reduce conflict, the grammar is LALR(1), otherwise not LALR(1).</p>
+<h4 id="Comparisons-Among-LR-Parsers"><a href="#Comparisons-Among-LR-Parsers" class="headerlink" title="Comparisons Among LR Parsers"></a>Comparisons Among LR Parsers</h4><p>Languages&#x2F;Grammars supported:$\text{CLR&gt;LALR&gt;SLR}$</p>
+<p>number of states in the parsing table: $\text{CLR&gt;LALR&#x3D;SLR}$</p>
+<p>Driver programs: $\text{CLR&#x3D;LALR&#x3D;SLR}$</p>
+<h2 id="Lecture-5-Syntax-Directed-Translation"><a href="#Lecture-5-Syntax-Directed-Translation" class="headerlink" title="Lecture 5 - Syntax-Directed Translation"></a>Lecture 5 - Syntax-Directed Translation</h2><h3 id="Syntax-Directed-Definitions"><a href="#Syntax-Directed-Definitions" class="headerlink" title="Syntax-Directed Definitions"></a>Syntax-Directed Definitions</h3><p><strong>Syntax-Directed Definitions</strong>: attributes + semantic rules</p>
+<p><strong>Synthesized Attributes</strong>: value at a parse-tree node $N$ is only determined from attribute values at the children of $N$ and at $N$ itself</p>
+<ul>
+<li>can be evaluated during bottom-up traversal of a parse tree</li>
+</ul>
+<p><strong>Inherited attributes</strong> have their value at a parse-tree node determined from attribute values at the node <strong>itself</strong>, its <strong>parent</strong>, and its <strong>siblings</strong> in the parse tree</p>
+<ul>
+<li>Non-terminals in a parse tree may not correspond to proper language constructs</li>
+</ul>
+<img src="https://s2.loli.net/2023/11/13/BYo6XWehN9zCcI8.png" alt="image.png" style="zoom:50%;" />
+
+<h3 id="Evaluation-Orders-for-SDD’s"><a href="#Evaluation-Orders-for-SDD’s" class="headerlink" title="Evaluation Orders for SDD’s"></a>Evaluation Orders for SDD’s</h3><p>Dependency: $N.a &#x3D; f({M_i.a_i})$</p>
+<p><strong>Dependency Graph</strong>: defines partial relations(order of computation) between attributes</p>
+<ul>
+<li>vertex: attribute instance</li>
+<li>directed edge $a_1\rightarrow a_2$: $a_1$ is needed to compute $a_2$ </li>
+<li>cycle: cyclic dependency, not computable</li>
+</ul>
+<p>Then compute the attributes in topo-sort order.</p>
+<p>Hard to tell if an arbitrary SDD is computable (parse trees contain no cycles).</p>
+<h4 id="S-Attributed-SDD"><a href="#S-Attributed-SDD" class="headerlink" title="S-Attributed SDD"></a>S-Attributed SDD</h4><p>Every attribute is [synthesized](#Syntax-Directed Definitions), always computable.</p>
+<p>Edges are always from child to parent, any bottom-up order is valid, e.g., postorder traversal during bottom-up parsing.</p>
+<h4 id="L-Attributed-SDD"><a href="#L-Attributed-SDD" class="headerlink" title="L-Attributed SDD"></a>L-Attributed SDD</h4><p>Every production $A\rightarrow X_1\dots X_n$, for each $j&#x3D;1\dots n$, each inherited attribute of $X_j$ only depends on:</p>
+<ul>
+<li>the attributes of $X_1,\dots,X_{j-1}$</li>
+<li>the inherited attributes of $A$</li>
+</ul>
+<p>Or each attribute is synthesized, therefore S-Attributed SDD $\subseteq$ L-Attributed SDD.</p>
+<p>Edges are always from left to right, or from parent to child, computable.</p>
+<ul>
+<li>evaluate inherited attributes from parent node</li>
+<li>evaluate child nodes from left to right</li>
+<li>evaluate synthesized attributes from child nodes.</li>
+</ul>
+<h3 id="Syntax-Directed-Translation-Schemes"><a href="#Syntax-Directed-Translation-Schemes" class="headerlink" title="Syntax-Directed Translation Schemes"></a>Syntax-Directed Translation Schemes</h3><p>CFG with <strong>semantic actions</strong> embedded <strong>within production bodies</strong> </p>
+<ul>
+<li>Differ from the semantic rules in SDD’s </li>
+<li>Semantic actions can appear anywhere within a production body</li>
+</ul>
+<p>$$<br>B\rightarrow X{a} Y<br>$$</p>
+<p>If terminal $X$ is recognized, or all the terminals derived from nonterminal $X$ is recognized, action $a$ is done.</p>
+<ul>
+<li>bottom-up: perform $a$ as $X$ appears on the top of the parsing stack</li>
+<li>top-down: perform $a$ before attempting to expand $Y$ (if $Y$ is a nonterminal) or check for $Y$ on the input (if $Y$ is a terminal)</li>
+</ul>
+<h4 id="SDT’s-Implementable-During-Parsing"><a href="#SDT’s-Implementable-During-Parsing" class="headerlink" title="SDT’s Implementable During Parsing"></a>SDT’s Implementable During Parsing</h4><ul>
+<li>marker nonterminals $M\rightarrow \epsilon$ to replace embedded actions</li>
+<li>grammar parse-able, then SDT can be implemented during parsing</li>
+</ul>
+<h2 id="Lecture-6-Intermediate-Code-Generation"><a href="#Lecture-6-Intermediate-Code-Generation" class="headerlink" title="Lecture 6 - Intermediate-Code Generation"></a>Lecture 6 - Intermediate-Code Generation</h2><p>Front-end: Parser, Static Checker, Intermediate Code Generator</p>
+<p>Back-end: Code Generator</p>
+<h3 id="Intermediate-Representation"><a href="#Intermediate-Representation" class="headerlink" title="Intermediate Representation"></a>Intermediate Representation</h3><p>$M$ languages, $N$ machines, with intermediate representations, $M+N$ compilers.</p>
+<p>High-level IR like syntax trees are close to the source language</p>
+<ul>
+<li>machine-independent tasks</li>
+</ul>
+<p>Low-level IR are close to the target machines</p>
+<ul>
+<li>machine-dependent tasks</li>
+</ul>
+<p>On DAG, subexp appearing multiple times → subtree with multiple parents(node reuse)</p>
+<h3 id="Three-Address-Code"><a href="#Three-Address-Code" class="headerlink" title="Three-Address Code"></a>Three-Address Code</h3><p>$$<br>\text{x} &#x3D; \text{y op z}<br>$$</p>
+<p>Only <strong>one</strong> operator on the rhs.</p>
+<p>Operands(addresses) can be:</p>
+<ul>
+<li>Names</li>
+<li>Constants</li>
+<li>Temporary names</li>
+</ul>
+<h4 id="Instructions"><a href="#Instructions" class="headerlink" title="Instructions"></a>Instructions</h4><ol>
+<li><p>Assignment</p>
+<p>$\text{x} &#x3D; \text{y op z}$</p>
+<p>$\text{x} &#x3D; \text{op y}$</p>
+</li>
+<li><p>Copy</p>
+<p>$\text{x &#x3D; y}$</p>
+</li>
+<li><p>Unconditional jump</p>
+<p>$\text{goto L}$</p>
+</li>
+<li><p>Conditional jump</p>
+<p>$\text{if <cond> goto L}$</p>
+</li>
+<li><p>Procedure calls&#x2F;returns</p>
+<p>$\text{param x}_{1\dots n}$</p>
+<p>procedure call: $\text{call p, n}$</p>
+<p>function call: $\text{y &#x3D; call p, n}$</p>
+<p>$\text{return y}$</p>
+</li>
+<li><p>Indexed copy</p>
+<p>$\text{x &#x3D; y[i]}$</p>
+<p>$\text{x[i] &#x3D; y}$</p>
+</li>
+<li><p>Address and pointer assignment</p>
+<p>$\text{x &#x3D; &amp;y}$ (<code>x.rval</code> ← <code>y.lval</code>)</p>
+<p>$\text{x &#x3D; *y}$ (<code>x.rval</code> ← content stored at location indicated by <code>y.rval</code>)</p>
+<p>$\text{*x &#x3D; y}$ (content store at location indicated by <code>x.rval</code> ← <code>y.rval</code>)</p>
+</li>
+</ol>
+<h4 id="Quadruples"><a href="#Quadruples" class="headerlink" title="Quadruples"></a>Quadruples</h4><p>$$<br>\text{op}\quad \text{arg}_1\quad \text{arg}_2\quad \text{result}<br>$$</p>
+<p>Simple, straight forward.</p>
+<p>Temporary names in <code>result</code>  field are space-consuming(symbol table entries).</p>
+<h4 id="Triples"><a href="#Triples" class="headerlink" title="Triples"></a>Triples</h4><p>$$<br>\text{op}\quad \text{arg}_1\quad \text{arg}_2<br>$$</p>
+<p>Refer to the results by positions, without generating temporary names.</p>
+<p>Compiling optimization may <strong>swap instructions</strong>, leading to wrong results in triples.</p>
+<h4 id="Indirect-Triples"><a href="#Indirect-Triples" class="headerlink" title="Indirect Triples"></a>Indirect Triples</h4><p>Consist of a list of pointers to triples.</p>
+<p>An optimization can move an instruction by reordering the instruction list.</p>
+<img src="https://s2.loli.net/2023/11/20/8D9WbjlcOyYTNVG.png" alt="image.png" style="zoom:50%;" />
+
+<h4 id="Static-Single-Assignment-Form"><a href="#Static-Single-Assignment-Form" class="headerlink" title="Static Single-Assignment Form"></a>Static Single-Assignment Form</h4><p>Each name receives a single assignment</p>
+<p>combine definitions in different branches using $\phi$-function</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(flag)</span><br><span class="line">    x[<span class="number">1</span>] = <span class="number">-1</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    x[<span class="number">2</span>] = <span class="number">1</span>;</span><br><span class="line">x[<span class="number">3</span>] = phi(x[<span class="number">1</span>],x[<span class="number">2</span>]);</span><br><span class="line">y = x[<span class="number">3</span>] * a;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Type-and-Declarations"><a href="#Type-and-Declarations" class="headerlink" title="Type and Declarations"></a>Type and Declarations</h3><h4 id="Types-and-Type-Checking"><a href="#Types-and-Type-Checking" class="headerlink" title="Types and Type Checking"></a>Types and Type Checking</h4><p>Type info usages</p>
+<ul>
+<li>Find faults</li>
+<li>Determine memory needed at runtime</li>
+<li>Calculate addresses of array elements</li>
+<li>Type conversions</li>
+<li>Choose arithmetic operator</li>
+</ul>
+<p>Type checking: types of operands match the type expectation.</p>
+<h4 id="Type-Expressions"><a href="#Type-Expressions" class="headerlink" title="Type Expressions"></a>Type Expressions</h4><ul>
+<li><p>basic type: boolean, char, integer, float, void…</p>
+</li>
+<li><p>type name: name of a class</p>
+</li>
+<li><p>type constructor</p>
+<ul>
+<li>array(number, type expression)</li>
+<li>record</li>
+<li>function(type, type)→ return type</li>
+</ul>
+</li>
+<li><p><strong>Name Equivalence</strong></p>
+<p>names in type expressions are not replaced by the exact type expressions they define</p>
+</li>
+<li><p><strong>Structural Equivalence</strong></p>
+<p>replace the names by the type expressions and recursively check the substituted trees</p>
+</li>
+</ul>
+<h3 id="Translation-of-Expressions"><a href="#Translation-of-Expressions" class="headerlink" title="Translation of Expressions"></a>Translation of Expressions</h3><h4 id="SDD-for-Expression-Translation"><a href="#SDD-for-Expression-Translation" class="headerlink" title="SDD for Expression Translation"></a>SDD for Expression Translation</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">S</span><br><span class="line">| id = E;</span><br><span class="line">&#123;</span><br><span class="line">    S.code = E.code ||</span><br><span class="line">        gen(top.get(id.lexeme) <span class="string">&#x27;=&#x27;</span> E.addr);</span><br><span class="line">&#125;</span><br><span class="line">E</span><br><span class="line">| E1 + E2</span><br><span class="line">&#123;</span><br><span class="line">    E.addr = new Temp();</span><br><span class="line">    E.code = E1.code || E2.code || </span><br><span class="line">        gen(E.addr <span class="string">&#x27;=&#x27;</span> E1.addr <span class="string">&#x27;+&#x27;</span> E2.addr);</span><br><span class="line">&#125;</span><br><span class="line">| - E1</span><br><span class="line">&#123;</span><br><span class="line">    E.addr = new Temp();</span><br><span class="line">    E.code = E1.code || E2.code || </span><br><span class="line">        gen(E.addr <span class="string">&#x27;=&#x27;</span> <span class="string">&#x27;minus&#x27;</span> E1.addr);</span><br><span class="line">&#125;</span><br><span class="line">| (E1)</span><br><span class="line">&#123;</span><br><span class="line">    E.addr = E1.addr;</span><br><span class="line">    E.code = E1.code;</span><br><span class="line">&#125;</span><br><span class="line">| id</span><br><span class="line">&#123;</span><br><span class="line">    E.addr = top.get(id.lexeme);</span><br><span class="line">    E.code = <span class="string">&#x27;&#x27;;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>Generate instructions when seeing operations, then concatenate instructions</p>
+<ul>
+<li>For <strong>id</strong>, check the symbol table and save its address</li>
+<li>Use temporary name to hold intermediate values</li>
+</ul>
+<p><strong>Problem</strong></p>
+<p><code>code</code> attributes may be too long. Redundant parts waste memory!</p>
+<h4 id="Incremental-Translation-Scheme"><a href="#Incremental-Translation-Scheme" class="headerlink" title="Incremental Translation Scheme"></a>Incremental Translation Scheme</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">S</span><br><span class="line">| id = E;</span><br><span class="line">&#123;</span><br><span class="line">    gen(top.get(id.lexeme) <span class="string">&#x27;=&#x27;</span> E.addr);</span><br><span class="line">&#125;</span><br><span class="line">E</span><br><span class="line">| E1 + E2</span><br><span class="line">&#123;</span><br><span class="line">    E.addr = new Temp();</span><br><span class="line">    gen(E.addr <span class="string">&#x27;=&#x27;</span> E1.addr <span class="string">&#x27;+&#x27;</span> E2.addr);</span><br><span class="line">&#125;</span><br><span class="line">| - E1</span><br><span class="line">&#123;</span><br><span class="line">    E.addr = new Temp();</span><br><span class="line">    gen(E.addr <span class="string">&#x27;=&#x27;</span> <span class="string">&#x27;minus&#x27;</span> E1.addr);</span><br><span class="line">&#125;</span><br><span class="line">| (E1)</span><br><span class="line">&#123;</span><br><span class="line">    E.addr = E1.addr;</span><br><span class="line">&#125;</span><br><span class="line">| id</span><br><span class="line">&#123;</span><br><span class="line">    E.addr = top.get(id.lexeme);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>gen</code> appends the new 3-addr instruction to the sequence of instructions.</p>
+<p>This postfix SDT implemented in bottom-up parsing(semantic actions are executed upon reduction) guarantees that subexpressions are handled first.</p>
+<h3 id="Control-Flow"><a href="#Control-Flow" class="headerlink" title="Control Flow"></a>Control Flow</h3><h4 id="Short-Circuit-Behavior"><a href="#Short-Circuit-Behavior" class="headerlink" title="Short Circuit Behavior"></a>Short Circuit Behavior</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( x &lt; y || x &gt; z &amp;&amp; x != w )</span><br><span class="line">    x = <span class="number">0</span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    if x &lt; y goto L2</span></span><br><span class="line"><span class="comment">    ifFalse x &gt; z goto L1</span></span><br><span class="line"><span class="comment">    ifFalse x != w goto L1</span></span><br><span class="line"><span class="comment">L2: x = 0</span></span><br><span class="line"><span class="comment">L1: </span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Flow-of-Control-Statements"><a href="#Flow-of-Control-Statements" class="headerlink" title="Flow-of-Control Statements"></a>Flow-of-Control Statements</h4><p><strong>Grammar</strong></p>
+<ul>
+<li>$S\rightarrow \textbf{if} (B)\ S_1$</li>
+<li>$S\rightarrow \textbf{if} (B)\ S_1\ \textbf{else}\ S_2$</li>
+<li>$S\rightarrow \textbf{while} (B)\ S_1$</li>
+</ul>
+<p><strong>Inherited attributes</strong></p>
+<ul>
+<li>$B.true$: the label to which control flows if $B$ is true.</li>
+<li>$B.false$: the label to which control flows if $B$ is false.</li>
+<li>$S.next$: the label for the instruction immediately after the code for $S$.</li>
+</ul>
+<ol>
+<li><p>if</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">B.code  -&gt;	B.<span class="literal">true</span>/<span class="literal">false</span></span><br><span class="line">B.<span class="literal">true</span>:		S1.code</span><br><span class="line">B.<span class="literal">false</span>:	...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>if-else</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">B.code  -&gt;	B.<span class="literal">true</span>/<span class="literal">false</span></span><br><span class="line">B.<span class="literal">true</span>:		S1.code</span><br><span class="line">			<span class="keyword">goto</span> S.next</span><br><span class="line">B.<span class="literal">false</span>: 	S2.code</span><br><span class="line">S.next:		...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>while</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">begin:</span><br><span class="line">B.code  -&gt;	B.<span class="literal">true</span>/<span class="literal">false</span></span><br><span class="line">B.<span class="literal">true</span>:		S1.code</span><br><span class="line">			<span class="keyword">goto</span> begin</span><br><span class="line">B.<span class="literal">false</span>: 	...</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="Three-Address-Code-for-Booleans"><a href="#Three-Address-Code-for-Booleans" class="headerlink" title="Three-Address Code for Booleans"></a>Three-Address Code for Booleans</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">B</span><br><span class="line">| E1 rel E2</span><br><span class="line">&#123;</span><br><span class="line">    E.code = E1.code || E2.code</span><br><span class="line">        || gen(<span class="string">&#x27;if&#x27;</span> E1.addr rel.op E2.addr <span class="string">&#x27;goto&#x27;</span> B.<span class="literal">true</span>)</span><br><span class="line">        || gen(<span class="string">&#x27;goto&#x27;</span> B.<span class="literal">false</span>);</span><br><span class="line">&#125;</span><br><span class="line">| <span class="literal">true</span></span><br><span class="line">&#123;</span><br><span class="line">    B.code = gen(<span class="string">&#x27;goto&#x27;</span> B.<span class="literal">true</span>);</span><br><span class="line">&#125;</span><br><span class="line">| <span class="literal">false</span></span><br><span class="line">&#123;</span><br><span class="line">    B.code = gen(<span class="string">&#x27;goto&#x27;</span> B.<span class="literal">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">B</span><br><span class="line">| B1 || B2</span><br><span class="line">&#123;</span><br><span class="line">    B1.<span class="literal">true</span> = B.<span class="literal">true</span>;</span><br><span class="line">    B1.<span class="literal">false</span> = newlabel();</span><br><span class="line">    B2.<span class="literal">true</span> = B.<span class="literal">true</span>;</span><br><span class="line">    B2.<span class="literal">false</span> = B.<span class="literal">false</span>;</span><br><span class="line">    B.code = B1.code || label(B1.<span class="literal">false</span>) || B2.code</span><br><span class="line">&#125;</span><br><span class="line">| B1 &amp;&amp; B2</span><br><span class="line">&#123;</span><br><span class="line">    B1.<span class="literal">true</span> = newlabel();</span><br><span class="line">    B1.<span class="literal">false</span> = B.<span class="literal">false</span>;</span><br><span class="line">    B2.<span class="literal">true</span> = B.<span class="literal">true</span>;</span><br><span class="line">    B2.<span class="literal">false</span> = B.<span class="literal">false</span>;</span><br><span class="line">    B.code = B1.code || label(B1.<span class="literal">false</span>) || B2.code</span><br><span class="line">&#125;</span><br><span class="line">| !B1</span><br><span class="line">&#123;</span><br><span class="line">    B1.<span class="literal">true</span> = B.<span class="literal">false</span>;</span><br><span class="line">    B1.<span class="literal">false</span> = B.<span class="literal">true</span>;</span><br><span class="line">    B.code = B1.code;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Lecture-7-Run-Time-Environments"><a href="#Lecture-7-Run-Time-Environments" class="headerlink" title="Lecture 7 - Run-Time Environments"></a>Lecture 7 - Run-Time Environments</h2><h3 id="Run-Time-Environment"><a href="#Run-Time-Environment" class="headerlink" title="Run-Time Environment"></a>Run-Time Environment</h3><p><strong>Source-language abstractions</strong></p>
+<p>Names, scopes, data types, operators, procedures, parameters, flow-of-control constructs…</p>
+<p><strong>Run-time Environment</strong></p>
+<ul>
+<li><strong>Layout and allocation of storage locations</strong> for data in the source program</li>
+<li>Mechanisms to <strong>access variables</strong></li>
+<li><strong>Linkages between procedures</strong>, the mechanisms for <strong>passing parameters</strong></li>
+</ul>
+<h3 id="Storage-Organization"><a href="#Storage-Organization" class="headerlink" title="Storage Organization"></a>Storage Organization</h3><p><img src="https://s2.loli.net/2023/12/04/1MVKkRTN7OhLD92.png" alt="image.png"></p>
+<p><strong>Static</strong>:</p>
+<p>Storage-allocation decision can be made by looking only the program text.</p>
+<p>Global constants, global variables</p>
+<p><strong>Dynamic</strong>: </p>
+<p>Storage-allocation decision can be made only while the program is running</p>
+<ul>
+<li><p>Stack</p>
+<p>Lifetime same as that of the called procedure</p>
+</li>
+<li><p>Heap</p>
+<p>Hold data that may outlive the call to the procedure that created it</p>
+<p>Manual memory deallocation</p>
+<p>Automatic memory deallocation(GC)</p>
+</li>
+</ul>
+<h3 id="Stack-Space-Allocation"><a href="#Stack-Space-Allocation" class="headerlink" title="Stack Space Allocation"></a>Stack Space Allocation</h3><p>Procedure calls (<em>activation</em> of procedures): FI(called) LO(return)</p>
+<h4 id="Activation-tree"><a href="#Activation-tree" class="headerlink" title="Activation tree"></a>Activation tree</h4><ul>
+<li>node: corresponds to an activation (children nodes are ordered)</li>
+<li>root: activation of <code>main()</code> procedure</li>
+<li>pre-order traversal: sequence of procedure calls</li>
+<li>post-order traversal: sequence of returns</li>
+</ul>
+<h4 id="Activation-Record"><a href="#Activation-Record" class="headerlink" title="Activation Record"></a>Activation Record</h4><ul>
+<li>Procedure calls and returns maintained by a run-time stack: call stack(control stack)</li>
+<li>Each live activation has an activation record (stack frame) on the control stack</li>
+</ul>
+<h4 id="Calling-Return-Sequences"><a href="#Calling-Return-Sequences" class="headerlink" title="Calling&#x2F;Return Sequences"></a>Calling&#x2F;Return Sequences</h4><p><strong>Calling sequences</strong></p>
+<ul>
+<li>allocating activation records on the stack</li>
+<li>entering information into its fields</li>
+</ul>
+<p><strong>Return sequences</strong></p>
+<ul>
+<li>restoring the machine state so that the caller can continue execution</li>
+</ul>
+<p>Divided between caller and callee. Put as much code as possible into the callee.</p>
+<p><strong>Data perspective</strong>: pass arguments and return values.</p>
+<p><strong>Control perspective</strong>: transfer the control between the caller and  the callee.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Descriptions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Actual parameters</td>
+<td>Actual parameters used by the caller</td>
+</tr>
+<tr>
+<td>Returned values</td>
+<td>Values to be returned to the caller</td>
+</tr>
+<tr>
+<td>Control link</td>
+<td>Point to the activation record of the caller</td>
+</tr>
+<tr>
+<td>Access link</td>
+<td></td>
+</tr>
+<tr>
+<td>Saved machine status</td>
+<td>Information about the state of the machine before the call, including the return address and the contents of the registers used by the caller</td>
+</tr>
+<tr>
+<td>Local data</td>
+<td>Store the value of local variables</td>
+</tr>
+<tr>
+<td>Temporaries</td>
+<td>Temporary values such as those arising from the evaluation of expressions</td>
+</tr>
+</tbody></table>
+<p>Values passed between caller and callee are put at the beginning of the callee’s activation record (next to the caller’s record)</p>
+<p>Fixed-length items (control link, access link, saved machine status) are in the middle</p>
+<p>Items whose size may not be known early enough are placed at the end</p>
+<p>stack top pointer <code>sp</code> points to the end of the fixed length fields</p>
+<h4 id="Steps-of-a-calling-return-sequence"><a href="#Steps-of-a-calling-return-sequence" class="headerlink" title="Steps of a calling-return sequence"></a>Steps of a calling-return sequence</h4><ol>
+<li>The caller evaluates the <strong>actual parameters</strong></li>
+<li>The caller stores return address and <strong><code>sp</code></strong> into the callee’s activation record</li>
+<li>The caller increases <strong><code>sp</code></strong> accordingly</li>
+<li>The callee saves the <strong>register values</strong> and other status info</li>
+<li>The callee initializes its <strong>local data</strong> and begins execution</li>
+<li>Callee execution</li>
+<li>The callee places the return value next to the actual parameters fields in its activation record</li>
+<li>Using information in the machine-status field, the callee restores <strong><code>sp</code></strong> and other registers</li>
+<li>Go to the return address set by the caller</li>
+</ol>
+<h3 id="Heap-Management"><a href="#Heap-Management" class="headerlink" title="Heap Management"></a>Heap Management</h3><h4 id="The-Memory-Manager"><a href="#The-Memory-Manager" class="headerlink" title="The Memory Manager"></a>The Memory Manager</h4><p>Heap: data that lives indefinitely</p>
+<p>Memory manager allocates and deallocates space within the heap</p>
+<p><strong>Allocation</strong>: Provide contiguous heap memory</p>
+<ul>
+<li>use free space in heap</li>
+<li>extend the heap by getting consecutive virtual memory</li>
+</ul>
+<p><strong>Deallocation</strong>: Return deallocated space to the pool of free space for reuse</p>
+<ul>
+<li>memory managers do not return memory to the OS</li>
+</ul>
+<p><strong>Desirable Properties</strong></p>
+<ul>
+<li>Space efficiency</li>
+<li>Program efficiency</li>
+<li>Low overhead</li>
+</ul>
+<h4 id="Leveraging-Program-Locality"><a href="#Leveraging-Program-Locality" class="headerlink" title="Leveraging Program Locality"></a>Leveraging Program Locality</h4><p>Use memory hierarchy to minimize the average memory-access time</p>
+<ul>
+<li>Temporal locality</li>
+<li>Spatial locality</li>
+</ul>
+<h4 id="Reducing-Fragmentation"><a href="#Reducing-Fragmentation" class="headerlink" title="Reducing Fragmentation"></a>Reducing Fragmentation</h4><p><strong>Fragmentation</strong></p>
+<img src="https://s2.loli.net/2023/12/04/2PFSER4gfVUXeDs.png" alt="image.png" style="zoom:33%;" />
+
+<p><strong>Best-fit algorithm</strong></p>
+<p> improve space utilization, but slow</p>
+<p><strong>First-fit algorithm</strong></p>
+<p>faster and improves spatial locality, but fragmentation</p>
+<p><strong><a target="_blank" rel="noopener" href="https://cw.fel.cvut.cz/old/_media/courses/a4m33pal/04_dynamic_memory_v6.pdf">The Doug Lea’s Strategy</a></strong></p>
+<img src="https://s2.loli.net/2023/12/04/nXtKLFJpgyzlRPq.png" alt="image.png" style="zoom:50%;" />
+
+<h2 id="Lecture-8-Code-Generation"><a href="#Lecture-8-Code-Generation" class="headerlink" title="Lecture 8 - Code Generation"></a>Lecture 8 - Code Generation</h2><h3 id="Target-Language"><a href="#Target-Language" class="headerlink" title="Target Language"></a>Target Language</h3><p>Three-address machine: load &#x2F; store &#x2F; computation &#x2F; jump &#x2F; conditional jump</p>
+<h4 id="Addressing-modes"><a href="#Addressing-modes" class="headerlink" title="Addressing modes"></a>Addressing modes</h4><ul>
+<li><p><strong>Variable name <code>x</code></strong></p>
+<p><code>x</code>‘s l-value</p>
+</li>
+<li><p><code>a(r)</code></p>
+<p><code>a</code>‘s l-value + value in <code>r</code></p>
+<p><code>a</code> is a variable, <code>r</code> is a register</p>
+</li>
+<li><p><code>const(r)</code></p>
+<p><code>const</code> + value in <code>r</code></p>
+<p>Indirect addressing mode</p>
+</li>
+<li><p><code>*const(r)</code></p>
+<p>Two indirect addressing mode</p>
+</li>
+<li><p><code>*r</code></p>
+<p>Two indirect addressing mode</p>
+</li>
+<li><p><code>#const</code></p>
+<p>Immediate constant addressing mode</p>
+</li>
+</ul>
+<h3 id="Addresses-in-the-Target-Code"><a href="#Addresses-in-the-Target-Code" class="headerlink" title="Addresses in the Target Code"></a>Addresses in the Target Code</h3><h4 id="Static-Allocation"><a href="#Static-Allocation" class="headerlink" title="Static Allocation"></a>Static Allocation</h4><p><strong>Size and layout</strong> of the activation records determined by the symbol table.</p>
+<ol>
+<li>Store the return address in the beginning of the callee’s activation record in the <em>stack</em> area</li>
+<li>Jump to <code>codeArea</code>, the address of the 1st instruction of the callee in the <em>code</em> area</li>
+<li>Transfer control to the address saved at the beginning of the callee’s activation record</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ST callee.staticArea, #here + offset</span><br><span class="line">BR callee.codeArea</span><br><span class="line">...</span><br><span class="line">BR *callee.staticArea</span><br></pre></td></tr></table></figure>
+
+<h4 id="Stack-Allocation"><a href="#Stack-Allocation" class="headerlink" title="Stack Allocation"></a>Stack Allocation</h4><p>Use relative addresses for storage in activation records.</p>
+<p>Maintain a <code>sp</code> register pointing to the beginning of the stack-top activation record</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ADD SP, SP, #caller.recordSize</span><br><span class="line">ST *SP, #here + const</span><br><span class="line">BR callee.codeArea</span><br><span class="line">...</span><br><span class="line">BR *0(SP)</span><br><span class="line">SUB SP, SP, #caller.recordSize</span><br></pre></td></tr></table></figure>
+
+<h3 id="Basic-Blocks-and-Flow-Graph"><a href="#Basic-Blocks-and-Flow-Graph" class="headerlink" title="Basic Blocks and Flow Graph"></a>Basic Blocks and Flow Graph</h3><p>Basic block: no halting&#x2F;branching in the middle</p>
+<p>Flow graph: basic blocks as nodes, block-following relations as edges</p>
+<h4 id="Partitioning-Three-Address-Instructions-into-Basic-Blocks"><a href="#Partitioning-Three-Address-Instructions-into-Basic-Blocks" class="headerlink" title="Partitioning Three-Address Instructions into Basic Blocks"></a>Partitioning Three-Address Instructions into Basic Blocks</h4><p>Finding leader instructions:</p>
+<ol>
+<li>The 1st instruction of the entire intermediate code</li>
+<li>Target of any jump instruction</li>
+<li>Instructions immediately following jump instructions</li>
+</ol>
+<p>basic block: [leader instructions, min{next leader instructions, EOF}) </p>
+<img src="https://s2.loli.net/2023/12/11/znC6vQO8LWHBAmY.png" alt="image.png" style="zoom:50%;" />
+
+<h4 id="Loops"><a href="#Loops" class="headerlink" title="Loops"></a>Loops</h4><ol>
+<li>A loop $L$ is a set of nodes in the flow graph</li>
+<li>$L$ contains a node $e$ called the loop entry (循环入口)</li>
+<li>No node in $L$ except $e$ has a predecessor outside $L$.</li>
+<li>Every node in $L$ has a nonempty path, completely within $L$, to $e$</li>
+</ol>
+<h3 id="Optimization-of-Basic-Blocks"><a href="#Optimization-of-Basic-Blocks" class="headerlink" title="Optimization of Basic Blocks"></a>Optimization of Basic Blocks</h3><p>The DAG (directed acyclic graph) of a basic block enables several code-improving transformations:</p>
+<ul>
+<li>Eliminate local common subexpressions</li>
+<li>Eliminate dead code</li>
+<li>Reorder operands of instructions by algebraic laws</li>
+</ul>
+<p><strong>Local Common Subexpression</strong></p>
+<p>same operator, same children nodes in the same order, create only one node.</p>
+<p><strong>Dead Code Elimination</strong></p>
+<p>Delete any root (node without ancestors) that has no live variables attached.</p>
+<p>Repeatedly applying the transformation until convergence.</p>
+<p><strong>Use of Algebraic Identities</strong></p>
+<ul>
+<li>Eliminate computations: $x\times 1 &#x3D; x$</li>
+<li>Reduction in strength: $x &#x2F; 2 &#x3D; x * 0.5$</li>
+<li>Constant folding: $2 * 3.14 &#x3D; 6.28$</li>
+</ul>
+<h3 id="Simple-Code-Generator"><a href="#Simple-Code-Generator" class="headerlink" title="Simple Code Generator"></a>Simple Code Generator</h3><p>Three-address code→Machine instructions</p>
+<p>Use registers wisely to avoid unnecessary <code>load</code> and <code>store</code> instructions.</p>
+<p><strong>Principal uses of registers</strong></p>
+<ol>
+<li>operands</li>
+<li>temporaries</li>
+<li>global values</li>
+<li>run-time storage management (<code>rsp</code>)</li>
+</ol>
+<h4 id="Code-Generation-Algorithm"><a href="#Code-Generation-Algorithm" class="headerlink" title="Code Generation Algorithm"></a>Code Generation Algorithm</h4><p>Generate <code>load</code> only when necessary, avoid overwriting register in use.</p>
+<p><strong>Register descriptor</strong></p>
+<p>register storing variable value → variable name</p>
+<p><strong>Address descriptor</strong></p>
+<p>variable → locations storing its value (register, memory address, stack location)</p>
+<p><strong><code>getReg(I)</code> Usages</strong></p>
+<p>Select registers for each memory location of 3-address instruction $I$.</p>
+<ul>
+<li>$\text{x &#x3D; y + z}$<ol>
+<li>Invoke <code>getReg(I)</code> to select registers $\text{R}<em>\text{x}, \text{R}</em>\text{y},\text{R}_\text{z}$.</li>
+<li>If $\text{y}$ is not in $\text{R}<em>\text{y}$, according to the <strong>register descriptor</strong>, generate  $\text{LD \ R}</em>\text{y},\ \text y^\prime$, where $\text y^\prime$ is the memory location for $\text y$ according to the <strong>address descriptor</strong>.</li>
+<li>Generate $\text{ADD \ R}<em>\text x,\ \text R</em>\text y,\ \text R_\text z$</li>
+</ol>
+</li>
+<li>$\text{x &#x3D; y}$<ol>
+<li><code>getReg(I)</code> selects the same register for $\text x$ and $\text y$.</li>
+<li>If $\text{y}$ is not in $\text{R}<em>\text{y}$, generate $\text{LD \ R}</em>\text{y},\ \text y^\prime$.</li>
+</ol>
+</li>
+<li>Ending a basic block<ol>
+<li>For temp variables, release the associated registers</li>
+<li>If a variable is live (not 100% dead) on block exit, generate $\text{ST x},\ \text R_\text x$ for $\text x$ whose value in the register is newer than that in memory.</li>
+</ol>
+</li>
+</ul>
+<p><strong>Updating descriptors</strong></p>
+<p>Values in registers are no older than those in memory.</p>
+<ol>
+<li>$\text{LD \ R},\ \text x$<ol>
+<li>Set the register descriptor for $\text R$ to $\text x$</li>
+<li>Add $\text R$ to address descriptor for $\text x$</li>
+<li>Remove $\text R$ from address descriptor of other variables</li>
+</ol>
+</li>
+<li>$\text{ST \ x},\ \text R$<ol>
+<li>Add memory location of $\text x$ to its address descriptor</li>
+</ol>
+</li>
+<li>$\text{ADD \ R}<em>\text x,\ \text R</em>\text y,\ \text R_\text z$<ol>
+<li>Set the register descriptor for $\text R_\text x$ to $\text x$</li>
+<li>Set the address descriptor for $\text x$ to only $\text R_\text x$</li>
+<li>Remove $\text R_\text x$ from address descriptor of other variables</li>
+</ol>
+</li>
+<li>$\text x &#x3D; \text y$<ol>
+<li>Use rule 1 if $\text{LD \ R}_\text y,\ \text y$ is generated</li>
+<li>Remove $\text x$ from the register descriptor of $\text R_\text x$</li>
+<li>Add $\text x$ to the register descriptor of $\text R_\text y$</li>
+<li>Set the address descriptor for $\text x$ to only $\text R_\text y$</li>
+</ol>
+</li>
+</ol>
+<p><strong>Select registers</strong></p>
+<p>Pick registers for operands and result for each three-address instruction while avoiding <code>load</code> and <code>store</code> as possible.</p>
+<p><em>What if there’s no register available when attempting to allocate one?</em></p>
+<p>Example: $\text x &#x3D; \text y + \text z$, allocating a register for $\text y$</p>
+<ol>
+<li>Check if the victim $\text R_\text v$ is <strong>safe</strong> to update<ul>
+<li>There exists somewhere else storing latest value of $\text v$ besides $\text R_\text v$</li>
+<li>$\text v$ is $\text x$ (lhs) and $\text x$ is not the other operand $\text z$</li>
+<li>$\text v$ is dead after this instruction</li>
+</ul>
+</li>
+<li>If there is no safe registers, generate $\text{ST\  v, \ R}$ to store $\text v$ into its memory location (spill).</li>
+</ol>
+<p>If $\text R$ holds multiple variables, repeat the process for each such variable $\text v$.</p>
+<p>Pick the register requiring the smallest number of <code>ST</code> instructions.</p>
+<h2 id="Lecture-9-Introduction-to-Data-Flow-Analysis"><a href="#Lecture-9-Introduction-to-Data-Flow-Analysis" class="headerlink" title="Lecture 9 - Introduction to Data-Flow Analysis"></a>Lecture 9 - Introduction to Data-Flow Analysis</h2><h3 id="The-Data-Flow-Abstraction"><a href="#The-Data-Flow-Abstraction" class="headerlink" title="The Data-Flow Abstraction"></a>The Data-Flow Abstraction</h3><p><strong>Data-flow analysis</strong>: Derive information about the flow of data along program execution paths.</p>
+<ul>
+<li>identify common subexpressions</li>
+<li>eliminate dead code</li>
+</ul>
+<p><strong>Program point</strong>: points <u>before</u> and <u>after</u> each statement.</p>
+<p><strong>Execution path</strong>: sequence of points (within block &#x2F; across block).</p>
+<img src="https://s2.loli.net/2023/12/25/JalFPwqVXQy8Z6c.png" alt="image.png" style="zoom:50%;" />
+
+<p>Program execution can be viewed as a series of transformations of the program state (<u>the values of all variables, etc.</u>)</p>
+<center>Input State→Statements→Output State</center>
+
+<p>Data-flow analysis : all the possible program states → a finite set of facts</p>
+<blockquote>
+<p>In general, there is an infinite number of possible paths, and no analysis is necessarily a perfect representation of the state.</p>
+</blockquote>
+<p><strong>Reaching definitions</strong></p>
+<p>The data-flow value at <code>program point</code> is the set of <code>var</code>‘s definitions that can reach this point.</p>
+<p><strong>Constant folding</strong></p>
+<p>The data-flow value for <code>var</code> at <code>program point</code> is (not) a constant.</p>
+<h4 id="The-Data-Flow-Analysis-Schema"><a href="#The-Data-Flow-Analysis-Schema" class="headerlink" title="The Data-Flow Analysis Schema"></a>The Data-Flow Analysis Schema</h4><ol>
+<li><p>Constraints based on the semantics of the statements (transfer functions)</p>
+<p><strong>Transfer function</strong>: the relationship between the data-flow values before and after each statement.</p>
+<p><strong>Forward-flow problem</strong>: information propagate forward along execution paths, $\text{OUT}[s]&#x3D;f_s(\text{IN}[s])$.</p>
+</li>
+<li><p>Constraints based on the flow of control</p>
+<ol>
+<li><strong>Intra-block</strong>: $\text{IN}[s_{i+1}]&#x3D;\text{OUT}[s_i]$</li>
+<li><strong>Inter-block</strong>: $\text{IN}[B]&#x3D;\bigcup\limits_{P\text{ a predecessor of B}}\text{OUT}[P]$ (forward-flow)</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>Precise: code improvement</li>
+<li>Constraints: correct program semantics</li>
+</ul>
+<h3 id="Classic-Data-Flow-Problem"><a href="#Classic-Data-Flow-Problem" class="headerlink" title="Classic Data-Flow Problem"></a>Classic Data-Flow Problem</h3><h4 id="Reaching-Definitions"><a href="#Reaching-Definitions" class="headerlink" title="Reaching Definitions"></a>Reaching Definitions</h4><p>A definition $d$ of some variable $x$ reaches a point $p$ if there is a path from the program point after $d$ to $p$, such that $d$ is not “killed” along that path.</p>
+<p>If $d$ reaches the point $p$, then $d$ might be the last definition of $x$.</p>
+<p>Inaccuracies are allowed, but FALSE POSITIVE(reachable definitions killed) is not acceptable.</p>
+<h4 id="Transfer-Equations"><a href="#Transfer-Equations" class="headerlink" title="Transfer Equations"></a>Transfer Equations</h4><p>For a statement <code>d: u = v + w</code>,</p>
+<p>Generate a definition $d$ of variable $u$ and kill all other definitions of $u$.<br>$$<br>f_d(x) &#x3D; \text{gen}_d\cup (x-\text{kill}_d)<br>$$<br><img src="https://s2.loli.net/2023/12/25/IbRe8LCfOJYjKio.png" alt="image.png" style="zoom:50%;" /></p>
+<p>For a block $B$ with $n$ statements,<br>$$<br>\begin{align*}<br>f_B(x) &amp;&#x3D; \text{gen}_B\cup (x-\text{kill}_B)\<br>\text{gen}<em>B &amp;&#x3D; \bigcup\limits</em>{i&#x3D;1}^n(\text{gen}<em>i-\sum\limits</em>{j&#x3D;i+1}^n\text{kill}_j)\<br>\text{kill}<em>B &amp;&#x3D; \bigcup\limits</em>{i&#x3D;1}^n \text{kill}_i<br>\end{align*}<br>$$<br>The <strong>kill set</strong> is the union of all the definitions killed by the individual statements.</p>
+<p>The <strong>gen set</strong> contains all the definitions inside the block that are downward exposed (visible immediately after the block).</p>
+<h4 id="Control-Flow-Equations"><a href="#Control-Flow-Equations" class="headerlink" title="Control-Flow Equations"></a>Control-Flow Equations</h4><p>For the ENTRY block: $\text{OUT}[\text{ENTRY}] &#x3D; \emptyset$</p>
+<p>For any other basic block $B$:<br>$$<br>\begin{align*}<br>\text{OUT}[B] &amp;&#x3D; \text{gen}_B \cup (\text{IN}[B]-\text{kill}<em>B)\<br>\text{IN}[B] &amp;&#x3D; \bigcup\limits</em>{P\text{ a predecessor of B}}\text{OUT}[P]<br>\end{align*}<br>$$</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">OUT[ENTRY] = &#123;&#125;;</span><br><span class="line"><span class="keyword">for</span>(each basic block B other than ENTRY)</span><br><span class="line">    OUT[B] = &#123;&#125;;</span><br><span class="line"><span class="keyword">while</span>(changes to any OUT occur)</span><br><span class="line">    <span class="keyword">for</span>(each basic block B other than ENTRY)</span><br><span class="line">        update IN[B], OUT[B];</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Compiler/" rel="tag"># Compiler</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/01/11/CS323_Final_Review/" rel="prev" title="CS323 编译原理 期末复习">
+                  <i class="fa fa-angle-left"></i> CS323 编译原理 期末复习
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/01/11/CS329_Notes/" rel="next" title="CS329 Machine Learning Notes">
+                  CS329 Machine Learning Notes <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">萌ICP备20269202号 </a>
+  </div>
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Gu Tao</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
